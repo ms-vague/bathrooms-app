@@ -28,6 +28,6 @@ bathroomSchema.methods.apiRepr = function() {
 	};
 }
 
-const Bathroom = mongoose.model('Bathroom', bathroomSchema);
+const Bathrooms = mongoose.model('Bathroom', bathroomSchema);
 
-module.exports = {Bathroom};
+module.exports = {Bathrooms};
