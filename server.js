@@ -27,6 +27,16 @@ app.get('/bathrooms', (req, res) => {
 		});
 });
 
+app.get('/bathrooms/:id', (req, res) => {
+	Bathrooms
+	.findById(req.params.id)
+	.exec()
+	.then(bathroom => res.json(bathroom.apiRepr()))
+	.catch(err => {
+		res.status(500).json({message: 'Internal server error'})
+	});
+});
+
 let server;
 
 function runServer(databaseUrl=DATABASE_URL, port=PORT) {
