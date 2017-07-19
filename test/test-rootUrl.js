@@ -1,4 +1,4 @@
-/*const chai = require('chai');
+const chai = require('chai');
 const chaiHttp = require('chai-http');
 
 const {server, app} = require('../server');
@@ -50,4 +50,4 @@ describe('index page', function() {
 			res.should.be.html;
 		});
 	});
-}); */
+}); 
