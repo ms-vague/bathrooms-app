@@ -86,6 +86,14 @@ app.put('/bathrooms/:id', (req, res) => {
 		.catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 
+app.delete('/bathrooms/:id', (req, res) => {
+	Bathroom
+		.findByIdAndRemove(req.params.id)
+		.exec()
+		.then(bathroom => res.status(204).end())
+		.catch(err => res.status(500).json({message: 'Internal server error'}));
+});
+
 app.use('*', function(req, res) {
   res.status(404).json({message: 'Not Found'});
 });
