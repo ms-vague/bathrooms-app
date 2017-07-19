@@ -1,18 +1,3 @@
-{
-	"type" : "neutral",
-	"city" : "New Orleans",
-	"name" : "Coffee Spot",
-	"hours" : "24 hours"
-}
-{
-	"type" : "neutral",
-	"city" : "New Orleans",
-	"name" : "Mr. Souvlaki",
-	"hours" : "11:00am - 10:00pm"
-}
-{
-	"type" : "Gendered",
-	"city" : "New Orleans",
-	"name" : "Pizza Pizza",
-	"hours" : "24 hours"
-}
+{ "type" : "neutral", "city" : "New Orleans", "name" : "Coffee Spot", "hours" : "24 hours", "address": { "street": "1001 St. Dumaine", "zipcode": "70129" } }
+{ "type" : "neutral", "city" : "New Orleans", "name" : "Mr. Souvlaki", "hours" : "11:00am - 10:00pm", "address": { "street": "1001 St. Dumaine", "zipcode": "70129" } }
+{ "type" : "gendered", "city" : "New Orleans", "name" : "Pizza Pizza", "hours" : "24 hours", "address": { "street": "1001 St. Dumaine", "zipcode": "70129" } }
