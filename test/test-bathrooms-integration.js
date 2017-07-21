@@ -1,107 +1,125 @@
-/*const chai = require('chai');
+const chai = require('chai');
 const chaiHttp = require('chai-http');
 const faker = require('faker');
 const mongoose = require('mongoose');
 
+// this makes the should syntax available throughout
+// this module
 const should = chai.should();
 
-const {Bathrooms} = require('../models');
+const {Bathroom} = require('../models');
 const {app, runServer, closeServer} = require('../server');
 const {TEST_DATABASE_URL} = require('../config');
 
+chai.use(chaiHttp);
+
 function seedBathroomData() {
-	console.info('seeding bathoom data');
-	const seedData = [];
+ console.info('seeding bathroom data');
+ const seedData = [];
 
-	for (let i = 1; 1 <= 10; i++) {
-		seedData.push(generateBathroomData());
-	}
+ for (let i = 1; i <= 3; i++) {
+  seedData.push(generateBathroomData());
+ }
 
-	return Bathrooms.insertMany(seedData);
+ return Bathroom.insertMany(seedData);
 }
 
-function generateHours() {
-	const hours = ['12 - 5', '24 hrs', '9 - 5'];
-	return hours[Math.floor(Math.random() * hours.length)];
+function generateTypeData() {
+ const types = ['gendered', 'neutral'];
+   return types[Math.floor(Math.random() * types.length)];
 }
 
-function generateType() {
-	const types = ['neutral', 'gendered'];
-	return types[Math.floor(Math.random() * types.length)];
+function generateCityData() {
+ const cities = ['New Orleans', 'Denver', 'Metairie'];
+   return cities[Math.floor(Math.random() * cities.length)];
+}
+
+function generateHoursData() {
+ const hours = ['24 hrs', '10am - 10pm', '12pm - 10pm'];
+   return hours[Math.floor(Math.random() * hours.length)];
 }
 
 function generateBathroomData() {
-	return {
-		name: faker.company.companyName(),
-		hour: generateHours(),
-		type: generateType()
-	}
+ return {
+   type: generateTypeData(),
+   city: generateCityData(),
+   name: faker.company.companyName(),
+   hours: generateHoursData(),
+   address: {
+     street: faker.address.streetName(),
+     zipcode: faker.address.zipCode()
+   }
+ }
 }
 
 function tearDownDb() {
-	console.warn('Deleting database');
-	return mongoose.connection.dropDatabase();
+  console.warn('Deleting database');
+    return mongoose.connection.dropDatabase();
 }
 
 describe('Bathrooms API resource', function() {
-	before(function() {
-		return runServer(port);
-	});
+  before(function() {
+    return runServer(TEST_DATABASE_URL);
+  });
 
-	beforeEach(function() {
-		return seedBathroomData();
-	});
+  beforeEach(function() {
+   return seedBathroomData();
+  })
 
-	afterEach(function() {
-		return tearDownDb();
-	});
+  afterEach(function() {
+   return tearDownDb();
+  })
 
-	after(function() {
-		return closeServer();
-	});
+  after(function() {
+   return closeServer();
+  })
 
-	describe('GET endpoint', function() {
-		it('should return all existing restaurants', function() {
+  describe('GET endpoint', function() {
+   it('should return all existing bathrooms', function() {
 
-			let res;
-			return chai.request(app)
-			.get('/bathrooms')
-			.then(function(_res) {
-				res = _res;
-				res.should.have.status(200);
-				res.body.bathrooms.should.have.length.of.at.least(1);
-				return Bathrooms.count();
-			})
-			.then(function(count) {
-				res.body.bathrooms.should.have.length.of(count);
-			});
-		});
+    let res;
+    return chai.request(app)
+     .get('/bathrooms')
+     .then(function(_res) {
 
-		it('should return bathrooms with the correct fields', function() {
-			
-			let resBathroom;
-			return chai.request(app)
-			.get('/bathrooms')
-			.then(function(res) {
-				res.should.have.status(200);
-				res.should.be.json;
-				res.body.bathrooms.should.be.a('array');
-				res.body.bathrooms.should.have.a.length.of.at.least(1);
+     res = _res;
+     res.should.have.status(200);
+     res.body.bathrooms.should.have.length.of.at.least(1);
+     return Bathroom.count();
+    })
+     .then(function(count) {
+      res.body.bathrooms.should.have.length.of(count);
+     });
+   });
 
-				res.body.bathrooms.forEach(function(bathroom) {
-					bathroom.should.be.a('object');
-					bathroom.should.include.keys(
-						'id', 'name', 'hours', 'type');
-				});
-				resBathroom = res.body.bathrooms[0];
-				return Bathrooms.findById(resBathroom.id);
-			})
-			.then(function(bathroom) {
-				resBathroom.id.should.equal(bathroom.id);
-				resBathroom.name.should.equal(bathroom.name);
-				resBathroom.hours.should.equal(bathroom.hours);
-				resBathroom.type.should.equal(bathroom.type);
-			});
-		});
-	});
-});*/
+   it('should return restaurants with right fields', function() {
+
+    let resBathroom;
+    return chai.request(app)
+     .get('/bathrooms')
+     .then(function(res) {
+       res.should.have.status(200);
+       res.should.be.json;
+       res.body.bathrooms.should.be.a('array');
+       res.body.bathrooms.should.have.length.of.at.least(1);
+
+       res.body.bathrooms.forEach(function(bathroom) {
+         bathroom.should.be.a('object');
+         bathroom.should.include.keys('id', 'type', 'city', 'name', 'hours', 'address');
+       });
+
+       resBathroom = res.body.bathrooms[0];
+       return Bathroom.findById(resBathroom.id);
+     })
+     .then(function(bathroom) {
+
+       resBathroom.id.should.equal(bathroom.id);
+       resBathroom.type.should.equal(bathroom.type);
+       resBathroom.city.should.equal(bathroom.city);
+       resBathroom.name.should.equal(bathroom.name);
+       resBathroom.hours.should.equal(bathroom.hours);
+       resBathroom.address.should.contain(bathroom.address.street);
+     });
+   });
+  });
+});
