@@ -21,7 +21,7 @@ bathroomSchema.methods.apiRepr = function() {
 		type: this.type,
 		city: this.city,
 		name: this.name,
-		name: this.hours,
+		hours: this.hours,
 		address: this.addressString
 	};
 }
