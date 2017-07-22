@@ -75,7 +75,7 @@ describe('Bathrooms API resource', function() {
   })
 
   describe('GET endpoint', function() {
-   it('should return all existing bathrooms', function() {
+   it('should return all existing bathroom locations', function() {
 
     let res;
     return chai.request(app)
@@ -92,7 +92,7 @@ describe('Bathrooms API resource', function() {
      });
    });
 
-   it('should return restaurants with right fields', function() {
+   it('should return bathrooms with right fields', function() {
 
     let resBathroom;
     return chai.request(app)
@@ -121,5 +121,39 @@ describe('Bathrooms API resource', function() {
        resBathroom.address.should.contain(bathroom.address.street);
      });
    });
+  });
+
+
+  describe('POST endpoint', function() {
+
+   it('should add a new bathroom location', function() {
+     const newBathroom = generateBathroomData();
+
+     return chai.request(app)
+       .post('/bathrooms')
+       .send(newBathroom)
+       .then(function(res) {
+         res.should.have.status(201);
+         res.should.be.json;
+         res.body.should.be.a('object');
+         res.body.should.include.keys('id', 'type', 'city', 'name', 'hours', 'address');
+         res.body.id.should.not.be.null;
+         res.body.type.should.equal(newBathroom.type);
+         res.body.city.should.equal(newBathroom.city);
+         res.body.name.should.equal(newBathroom.name);
+         res.body.hours.should.equal(newBathroom.hours);
+         res.body.address.should.equal(`${newBathroom.address.street} ${newBathroom.address.zipcode}`);
+
+         return Bathroom.findById(res.body.id);
+       })
+       .then(function(bathroom) {
+         bathroom.type.should.equal(newBathroom.type);
+         bathroom.city.should.equal(newBathroom.city);
+         bathroom.name.should.equal(newBathroom.name);
+         bathroom.hours.should.equal(newBathroom.hours);
+         bathroom.address.street.should.equal(newBathroom.address.street);
+         bathroom.address.zipcode.should.equal(newBathroom.address.zipcode);
+       });
+    });
   });
 });
