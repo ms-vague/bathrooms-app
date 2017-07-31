@@ -84,11 +84,11 @@ describe('Bathrooms API resource', function() {
 
      res = _res;
      res.should.have.status(200);
-     res.body.bathrooms.should.have.length.of.at.least(1);
+     res.body.bathrooms.should.have.lengthOf.at.least(1);
      return Bathroom.count();
     })
      .then(function(count) {
-      res.body.bathrooms.should.have.length.of(count);
+      res.body.bathrooms.should.have.lengthOf(count);
      });
    });
 
@@ -154,6 +154,69 @@ describe('Bathrooms API resource', function() {
          bathroom.address.street.should.equal(newBathroom.address.street);
          bathroom.address.zipcode.should.equal(newBathroom.address.zipcode);
        });
+    });
+  });
+
+  describe('PUT endpoint', function() {
+
+    it('should update fields you send over', function() {
+      const updateData = {
+        type: 'foo',
+        city: 'bar',
+        name: 'bizz',
+        hours: 'bang',
+        address: {
+          street: 'boop',
+          zipcode: 'beep'
+        }
+      };
+
+      return Bathroom
+        .findOne()
+        .exec()
+        .then(function(bathroom) {
+          updateData.id = bathroom.id;
+
+          return chai.request(app)
+          .put(`/bathrooms/${bathroom.id}`)
+          .send(updateData);
+        })
+        .then(function(res) {
+          res.should.have.status(204);
+
+          return Bathroom.findById(updateData.id).exec();
+        })
+        .then(function(bathroom) {
+          bathroom.type.should.equal(updateData.type);
+          bathroom.city.should.equal(updateData.city);
+          bathroom.name.should.equal(updateData.name);
+          bathroom.hours.should.equal(updateData.hours);
+          bathroom.address.street.should.equal(updateData.address.street);
+          bathroom.address.zipcode.should.equal(updateData.address.zipcode);
+        });
+    });
+  });
+
+  describe('DELETE endpoint', function() {
+
+    it('should delete a post by id', function() {
+
+      let bathroom;
+
+      return Bathroom
+        .findOne()
+        .exec()
+        .then(function(_bathroom) {
+          bathroom = _bathroom;
+          return chai.request(app).delete(`/bathrooms/${bathroom.id}`);
+        })
+        .then(function(res) {
+          res.should.have.status(204);
+          return Bathroom.findById(bathroom.id).exec();
+        })
+        .then(function(_bathroom) {
+          should.not.exist(_bathroom);
+        });
     });
   });
 });
