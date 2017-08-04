@@ -6,6 +6,10 @@ const bathroomSchema = mongoose.Schema({
 	name: {type: String, required: true},
 	hours: {type: String, required: true},
 	address: {
+		coord: {
+			lat: Number,
+			lng: Number
+		},
 		street: String,
 		zipcode: String
 	}
@@ -22,7 +26,7 @@ bathroomSchema.methods.apiRepr = function() {
 		city: this.city,
 		name: this.name,
 		hours: this.hours,
-		address: this.addressString
+		address: this.addressString,
 	};
 }
 
