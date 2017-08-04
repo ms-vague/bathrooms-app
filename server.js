@@ -8,6 +8,7 @@ const {PORT, DATABASE_URL} = require('./config');
 const {Bathroom} = require('./models');
 
 const app = express();
+app.use(express.static('public'));
 app.use(bodyParser.json());
 
 app.get('/bathrooms', (req, res) => {
@@ -52,7 +53,7 @@ app.post('/bathrooms', (req, res) => {
   city: req.body.city,
   name: req.body.name,
   hours: req.body.hours,
-  address: req.body.address
+  address: req.body.address,
  })
  .then(
   bathroom => res.status(201).json(bathroom.apiRepr()))
