@@ -16,7 +16,7 @@ const bathroomSchema = mongoose.Schema({
 });
 
 bathroomSchema.virtual('addressString').get(function() {
-	return `${this.address.street} ${this.address.zipcode}`.trim()
+	return  `${this.address.street} ${this.address.zipcode}`.trim()
 });
 
 bathroomSchema.methods.apiRepr = function() {
@@ -27,6 +27,10 @@ bathroomSchema.methods.apiRepr = function() {
 		name: this.name,
 		hours: this.hours,
 		address: this.addressString,
+		coords: { 
+			lat: this.address.coord.lat,
+			lng: this.address.coord.lng
+		 }
 	};
 }
 
