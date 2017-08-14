@@ -4,13 +4,13 @@ let stateFacet = (function() {
 
   let state = {};  
 
-  function setData(bathrooms) {
-    state.bathrooms = bathrooms;
+  function getData(bathrooms) {
+    state = bathrooms;
     //console.log(state);
   }
 
   return {
-     setData: setData
+     setData: getData
   }
 
 }());
@@ -18,7 +18,7 @@ let stateFacet = (function() {
 
 $.getJSON(RESULTS_URL, function(data) {
   //console.log(data);
- 
+
   stateFacet.setData(data);
   // antiquated. redo in jQuery -- with init function
 
