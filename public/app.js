@@ -4,26 +4,47 @@ let stateFacet = (function() {
 
   let state = {};  
 
+  //console.log('before getData', state);
+
   function getData(bathrooms) {
+    //console.log('before assignment inside getData', state);
     state = bathrooms;
-    //console.log(state);
+    //console.log('inside getData', state);
+  }
+
+  function seeData() {
+    //console.log('inside seeData', state);
+    return state;
   }
 
   return {
-     setData: getData
+     setData: getData,
+     showData: seeData
   }
 
 }());
+
+function initMap(state) {
+  //console.log(state);
+  let coords = state.bathrooms[0].coords;
+
+  let map = new google.maps.Map(document.getElementById('map'), {
+    center: new google.maps.LatLng(coords),
+    zoom: 10,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  });
+}
 
 
 $.getJSON(RESULTS_URL, function(data) {
   //console.log(data);
 
   stateFacet.setData(data);
+  initMap(stateFacet.showData());
   // antiquated. redo in jQuery -- with init function
 
   // get map to show up in browser
-  let map = new google.maps.Map(document.getElementById('map'), {
+  /*let map = new google.maps.Map(document.getElementById('map'), {
     center: new google.maps.LatLng(29.9511, -90.0715),
     zoom: 10,
     mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -62,7 +83,7 @@ $.getJSON(RESULTS_URL, function(data) {
         infoWindow.open(map, marker);
       });
     })(marker);
-  }
+  }*/
 });
 
 
