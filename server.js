@@ -12,9 +12,11 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 
 app.get('/bathrooms', (req, res) => {
+//console.log(req.query); 
+//res.send(req.query);
  Bathroom
  .find()
- .exec()
+ .exec() //query builder interface
  .then(bathrooms => {
   res.json({
    bathrooms: bathrooms.map(
@@ -37,6 +39,11 @@ app.get('/bathrooms/:id', (req, res) => {
   console.error(err);
    res.status(500).json({message: 'Internal server error'})
  });
+});
+
+app.get('/bathrooms/address/:zipcode', (req, res) => {
+  Bathroom
+  .find(req.params.address.zipcode)
 });
 
 app.post('/bathrooms', (req, res) => {
