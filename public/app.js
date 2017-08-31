@@ -18,20 +18,20 @@ let stateFacet = (function() {
     state = bathrooms;
   }
 
-  function seeZipcodes() {
-    for (var props in state) {
+  function appendZipcodes() {
+    for (let props in state) {
       var bathroomsArray = state[props];
     }
-    var zipcodes = bathroomsArray.map(function(zip) {
+    let zipcodes = bathroomsArray.map(function(zip) {
         return zip.zipcode; 
     });
-    zipcodes.map(function(x) {
-      return $('ul').append('<li>' + x + '</li>');
+    zipcodes.map(function(zip) {
+      return $('ul').append('<li>' + zip + '</li>');
     });
   }
 
   return {
-    showData: seeZipcodes,
+    showData: appendZipcodes,
   }
 
 }());
