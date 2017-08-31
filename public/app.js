@@ -18,23 +18,23 @@ let stateFacet = (function() {
     state = bathrooms;
   }
 
-  function seeBathrooms() {
+  function seeZipcodes() {
     for (var props in state) {
       var bathroomsArray = state[props];
     }
     var zipcodes = bathroomsArray.map(function(zip) {
         return zip.zipcode; 
     });
-    return zipcodes;
+    zipcodes.map(function(x) {
+      return $('ul').append('<li>' + x + '</li>');
+    });
   }
 
   return {
-    showData: seeBathrooms,
+    showData: seeZipcodes,
   }
 
 }());
-
-
 
 
 
