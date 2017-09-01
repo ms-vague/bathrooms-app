@@ -31,7 +31,7 @@ let stateFacet = (function() {
   }
 
   return {
-    showData: appendZipcodes,
+    showData: appendZipcodes
   }
 
 }());
