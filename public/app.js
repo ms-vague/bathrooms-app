@@ -19,17 +19,15 @@ let stateFacet = (function() {
     state = bathrooms;
   }
 
-  function showBathrooms() {
-    for (let props in state) {
-      var bathroomsArray = state[props]
-    }
+  function addBathroomLocation() {
+    var bathroomsArray = state.bathrooms;
     bathroomsArray.map(function(bathroom) {
       console.log(bathroom);
     });
   }
 
   return {
-    showData: showBathrooms
+    showData: addBathroomLocation
   }
 
 }());
