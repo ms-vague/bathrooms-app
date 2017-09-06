@@ -40,7 +40,7 @@ app.get('/bathrooms/:id', (req, res) => {
 });
 
 app.post('/bathrooms', (req, res) => {
- const requiredFields = ['type', 'city', 'name', 'hours', 'street', 'coord', 'zipcode'];
+ const requiredFields = ['type', 'city', 'name', 'hours', 'street', 'zipcode'];
  requiredFields.forEach(field => {
   if (!(field in req.body && req.body[field])) {
    res.status(400).json({message: `Must specify value for ${field}`});
@@ -55,10 +55,6 @@ app.post('/bathrooms', (req, res) => {
   hours: req.body.hours,
   address: {
     street: req.body.street,
-    coord: { 
-      lat: req.body.coord.lat,
-      lng: req.body.coord.lng 
-    },
   },
   zipcode: req.body.zipcode
  })
@@ -79,7 +75,7 @@ app.put('/bathrooms/:id', (req, res) => {
   res.status(400).json({message: message});
  }
  const toUpdate = {};
- const updateableFields = ['type', 'city', 'name', 'hours', 'address', 'coord', 'zipcode'];
+ const updateableFields = ['type', 'city', 'name', 'hours', 'street', 'zipcode'];
 
  updateableFields.forEach(field => {
   if (field in req.body) {
