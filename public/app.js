@@ -5,7 +5,8 @@ var RESULTS_URL = '/bathrooms';
 let stateFacet = (function() {
 
   let state = {
-      };  
+
+  }
 
   function getBathroomsFromServer() {
     $.getJSON(RESULTS_URL, function(bathrooms) {
@@ -18,23 +19,21 @@ let stateFacet = (function() {
     state = bathrooms;
   }
 
-  function appendZipcodes() {
+  function showBathrooms() {
     for (let props in state) {
-      var bathroomsArray = state[props];
+      var bathroomsArray = state[props]
     }
-    let zipcodes = bathroomsArray.map(function(zip) {
-        return zip.zipcode; 
-    });
-    zipcodes.map(function(zip) {
-      return $('ul').append('<li>' + zip + '</li>');
+    bathroomsArray.map(function(bathroom) {
+      console.log(bathroom);
     });
   }
 
   return {
-    showData: appendZipcodes
+    showData: showBathrooms
   }
 
 }());
+
 
 
 
