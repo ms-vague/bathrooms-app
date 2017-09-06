@@ -8,14 +8,12 @@ const {PORT, DATABASE_URL} = require('./config');
 const {Bathroom} = require('./models');
 
 const app = express();
-app.use(express.static('public'));
 app.use(bodyParser.json());
+app.use(express.static('public'));
 
 app.get('/bathrooms', (req, res) => {
-//console.log(req.query); 
-//res.send(req.query);
  Bathroom
- .find({name: "LGBT Center"})
+ .find()
  .exec() //query builder interface
  .then(bathrooms => {
   res.json({
@@ -42,7 +40,7 @@ app.get('/bathrooms/:id', (req, res) => {
 });
 
 app.post('/bathrooms', (req, res) => {
- const requiredFields = ['type', 'city', 'name', 'hours'];
+ const requiredFields = ['type', 'city', 'name', 'hours', 'street', 'coord', 'zipcode'];
  requiredFields.forEach(field => {
   if (!(field in req.body && req.body[field])) {
    res.status(400).json({message: `Must specify value for ${field}`});
@@ -55,7 +53,14 @@ app.post('/bathrooms', (req, res) => {
   city: req.body.city,
   name: req.body.name,
   hours: req.body.hours,
-  address: req.body.address,
+  address: {
+    street: req.body.street,
+    coord: { 
+      lat: req.body.coord.lat,
+      lng: req.body.coord.lng 
+    },
+  },
+  zipcode: req.body.zipcode
  })
  .then(
   bathroom => res.status(201).json(bathroom.apiRepr()))
@@ -63,6 +68,7 @@ app.post('/bathrooms', (req, res) => {
   console.error(err);
   res.status(500).json({message: 'Internal server error'});
  });
+ res.send(Bathroom);
 });
 
 app.put('/bathrooms/:id', (req, res) => {
@@ -73,7 +79,7 @@ app.put('/bathrooms/:id', (req, res) => {
   res.status(400).json({message: message});
  }
  const toUpdate = {};
- const updateableFields = ['type', 'city', 'name', 'hours', 'address'];
+ const updateableFields = ['type', 'city', 'name', 'hours', 'address', 'coord', 'zipcode'];
 
  updateableFields.forEach(field => {
   if (field in req.body) {
