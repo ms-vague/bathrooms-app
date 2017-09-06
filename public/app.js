@@ -1,36 +1,57 @@
 'use strict';
 
-var RESULTS_URL = '/bathrooms';
+$(function() {
 
-let stateFacet = (function() {
+  var RESULTS_URL = '/bathrooms';
+  var $type = $('.type');
+  var $city = $('.city');
+  var $name = $('.name');
+  var $street = $('.street');
+  var $zipcode = $('.zipcode');
 
-  let state = {
+  $.ajax({
+    type: 'GET',
+    url: RESULTS_URL,
+    success: function(bathrooms) {
+      $.each(bathrooms, function(i, bathroom) {
+        //console.log(bathroom);
+        bathroom.map(function(eachLocation) {
+          //console.log(eachLocation);
+          // below to see if it's working //
+          $('.bathrooms').append(`<li> ${eachLocation.name}` + ` ` + `${eachLocation.zipcode} </li>`);
+        });
+      });
+    },
+    error: function() {
+      console.log('Error loading bathrooms');
+    }
+  });
 
-  }
+  $('.add-bathroom').on('click', function(e) {
+    e.preventDefault();
 
-  function getBathroomsFromServer() {
-    $.getJSON(RESULTS_URL, function(bathrooms) {
-        state = bathrooms;
-    });
-  } 
-  getBathroomsFromServer();
+    var bathroom = {
+      type: $type.val(),
+      city: $city.val(),
+      name: $name.val(),
+      street: $street.val(),
+      zipcode: $zipcode.val()
+    };
+    //console.log(JSON.stringify(bathroom));
+    $.ajax({
+      type: 'POST',
+      url: RESULTS_URL,
+      data: JSON.stringify(bathroom),
+      success: function(newBathroom) {
+        console.log('Success');
+      },
+      error: function() {
+        alert('Error saving bathroom');
+      }
+    })
+  });
 
-  function getBathrooms(bathrooms) {
-    state = bathrooms;
-  }
-
-  function addBathroomLocation() {
-    var bathroomsArray = state.bathrooms;
-    bathroomsArray.map(function(bathroom) {
-      console.log(bathroom);
-    });
-  }
-
-  return {
-    showData: addBathroomLocation
-  }
-
-}());
+});
 
 
 
