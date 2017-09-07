@@ -42,6 +42,7 @@ $(function() {
       type: 'POST',
       url: RESULTS_URL,
       data: JSON.stringify(bathroom),
+      contentType: "application/json; charset=utf-8",
       success: function(newBathroom) {
         console.log('Success');
       },
