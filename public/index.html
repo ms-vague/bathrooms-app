@@ -6,22 +6,27 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css'>
-  <link rel="stylesheet" href="">
+  <link rel="stylesheet" href="main.css">
 </head>
 <body>
-	<p>Hello world!</p>
 
-  <form class='add-bathroom-form'>
-    <select class='type'>
-      <option value='neutral'>Neutral</option>
-      <option value='gendered'>Gendered</option>
-    </select>
-    <input type="text" name="bathroom-entry" class='city' placeholder='New Orleans'>
-    <input type="text" name="bathroom-entry" class='name' placeholder='Rouses'>
-    <input type="text" name="bathroom-entry" class='street' placeholder='400 N Carrollton Ave'>
-    <input type="number" name="bathroom-entry" class='zipcode' placeholder='70119'>
-    <button type='submit' class='add-bathroom'>Add new location</button>
-  </form>
+  <div class='form-container'>
+
+    <h1>Add New Bathroom Location</h1>
+
+    <form class='add-bathroom-form'>
+      <select class='type'>
+        <option value='neutral'>Neutral</option>
+        <option value='gendered'>Gendered</option>
+      </select>
+      <input type="text" name="bathroom-entry" class='city' placeholder='New Orleans'>
+      <input type="text" name="bathroom-entry" class='name' placeholder='Rouses'>
+      <input type="text" name="bathroom-entry" class='street' placeholder='400 N Carrollton Ave'>
+      <input type="number" name="bathroom-entry" class='zipcode' placeholder='70119'>
+      <button type='submit' class='add-bathroom'>Add new location</button>
+    </form>
+
+  </div>
 
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js'></script>
   <script src="app.js"></script>
