@@ -1,0 +1,19 @@
+* {
+  box-sizing: border-box;
+}
+
+#map {
+  height: 400px;
+  width: 600px;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.form-container {
+  padding: 50px;
+}
+
