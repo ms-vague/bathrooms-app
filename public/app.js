@@ -3,11 +3,16 @@
 $(function() {
 
   var RESULTS_URL = '/bathrooms';
+  var $location = $('.name-zipcodes'); 
   var $type = $('.type');
   var $city = $('.city');
   var $name = $('.name');
   var $street = $('.street');
   var $zipcode = $('.zipcode');
+
+  function addBathroom(bathroom) {
+    $location.append(`<li> ${bathroom.name}` + ` ` + `${bathroom.zipcode} </li>`);
+  }
 
   $.ajax({
     type: 'GET',
@@ -17,8 +22,7 @@ $(function() {
         //console.log(bathroom);
         bathroom.map(function(eachLocation) {
           //console.log(eachLocation);
-          // below to see if it's working //
-          $('.bathrooms').append(`<li> ${eachLocation.name}` + ` ` + `${eachLocation.zipcode} </li>`);
+          addBathroom(eachLocation);
         });
       });
     },
@@ -37,19 +41,20 @@ $(function() {
       street: $street.val(),
       zipcode: $zipcode.val()
     };
-    //console.log(JSON.stringify(bathroom));
+
     $.ajax({
       type: 'POST',
       url: RESULTS_URL,
       data: JSON.stringify(bathroom),
-      contentType: "application/json; charset=utf-8",
+      contentType: 'application/json; charset=utf-8',
       success: function(newBathroom) {
         console.log('Success');
+        addBathroom(newBathroom);
       },
       error: function() {
-        alert('Error saving bathroom');
+        console.log('Error saving bathroom');
       }
-    })
+    });
   });
 
 });
