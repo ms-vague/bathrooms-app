@@ -3,7 +3,7 @@
 $(function() {
 
   var RESULTS_URL = '/bathrooms';
-  var $location = $('.name-zipcodes'); 
+  var $location = $('.locations'); 
   var $type = $('.type');
   var $city = $('.city');
   var $name = $('.name');
@@ -56,8 +56,19 @@ $(function() {
       }
     });
   });
-
 });
+
+function initMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    center: { 
+      lat: 29.9511, 
+      lng: -90.0715
+    },
+    zoom: 10
+  });
+}
+
+
 
 
 
