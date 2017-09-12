@@ -2,6 +2,9 @@ var bathroomTemplate = (
   "<div class='module'>" +
     "<ul class='locations'>" +
       "<p><span class='bathroom-location-name'></span></p>" +
+      "<button class='delete-location'>" +
+      "<span class='button-label'>Delete</span>" +
+      "</button>" +
     "</ul>" +
   "</div>"
 );
@@ -37,6 +40,15 @@ function addBathroomLocation(bathroom) {
   });
 }
 
+function deleteBathroomLocation(bathroomId) {
+  console.log('Deleting bathroom location `' + bathroomId + '`');
+  $.ajax({
+    url: BATHROOMS_URL + '/' + bathroomId,
+    method: 'DELETE',
+    success: getAndDisplayBathrooms
+  });
+}
+
 function handleBathroomAdd() {
   $('.add-bathroom-form').submit(function(e) {
     e.preventDefault();
@@ -50,10 +62,21 @@ function handleBathroomAdd() {
   });
 }
 
+function handleBathroomDelete() {
+  $('.module').on('click', '.delete-location', function(e) {
+    e.preventDefault();
+    console.log('Pew Pew!');
+    deleteBathroomLocation($(e.currentTarget).closest('.module').attr('.bathroom-location-name'));
+  });
+}
+
 $(function() {
   getAndDisplayBathrooms();
   handleBathroomAdd();
+  handleBathroomDelete();
 });
+
+
 
 /*
 var initMap = function() {
