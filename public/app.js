@@ -1,57 +1,61 @@
-'use strict';
-$(function() {
-  var RESULTS_URL = '/bathrooms';
-  var $location = $('.locations');
-  var $type = $('.type');
-  var $city = $('.city');
-  var $name = $('.name');
-  var $street = $('.street');
-  var $zipcode = $('.zipcode');
+var bathroomTemplate = (
+  "<div class='module'>" +
+    "<ul class='locations'>" +
+      "<p><span class='bathroom-location-name'></span></p>" +
+    "</ul>" +
+  "</div>"
+);
 
-  function addBathroom(bathroom) {
-    $location.append(`<li> ${bathroom.name}` + ` ` + `${bathroom.zipcode} </li>`);
-  }
-  $.ajax({
-    type: 'GET',
-    url: RESULTS_URL,
-    success: function(bathrooms) {
-      $.each(bathrooms, function(i, bathroom) {
-        //console.log(bathroom);
-        bathroom.map(function(eachLocation) {
-          //console.log(eachLocation);
-          addBathroom(eachLocation);
-        });
-      });
-    },
-    error: function() {
-      console.log('Error loading bathrooms');
-    }
-  });
-  $('.add-bathroom').on('click', function(e) {
-    e.preventDefault();
-    var bathroom = {
-      type: $type.val(),
-      city: $city.val(),
-      name: $name.val(),
-      street: $street.val(),
-      zipcode: $zipcode.val()
-    };
-    $.ajax({
-      type: 'POST',
-      url: RESULTS_URL,
-      data: JSON.stringify(bathroom),
-      contentType: 'application/json; charset=utf-8',
-      success: function(newBathroom) {
-        console.log('Success');
-        addBathroom(newBathroom);
-      },
-      error: function() {
-        console.log('Error saving bathroom');
-      }
+var BATHROOMS_URL = '/bathrooms';
+
+function getAndDisplayBathrooms() {
+  console.log('Retrieving bathroom location');
+  $.getJSON(BATHROOMS_URL, function(eachBathroom) {
+    console.log('Rendering bathroom location');
+    var bathroomElements = eachBathroom.bathrooms.map(function(bathroom) {
+      var element = $(bathroomTemplate);
+      element.attr('class', bathroom.class);
+      var bathroomName = element.find('.bathroom-location-name');
+      bathroomName.text(bathroom.name);
+      return element;
     });
+    $('.locations').html(bathroomElements);
   });
+}
+
+function addBathroomLocation(bathroom) {
+  console.log('Adding bathroom location: ' + bathroom);
+  $.ajax({
+    method: 'POST',
+    url: BATHROOMS_URL,
+    data: JSON.stringify(bathroom),
+    success: function(data) {
+      getAndDisplayBathrooms();
+    },
+    dataType: 'json',
+    contentType: 'application/json'
+  });
+}
+
+function handleBathroomAdd() {
+  $('.add-bathroom-form').submit(function(e) {
+    e.preventDefault();
+    addBathroomLocation({
+      type: $(e.currentTarget).find('.type').val(),
+      city: $(e.currentTarget).find('.city').val(),
+      name: $(e.currentTarget).find('.name').val(),
+      street: $(e.currentTarget).find('.street').val(),
+      zipcode: $(e.currentTarget).find('.zipcode').val()
+    })
+  });
+}
+
+$(function() {
+  getAndDisplayBathrooms();
+  handleBathroomAdd();
 });
 
+/*
 var initMap = function() {
     var options = {
       center: {
@@ -81,7 +85,7 @@ $(function() {
   getBathroomsFromServer();
   initMap();
 });
-
+*/
 
 
 
