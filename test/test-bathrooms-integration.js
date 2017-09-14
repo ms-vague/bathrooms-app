@@ -34,21 +34,19 @@ function generateCityData() {
    return cities[Math.floor(Math.random() * cities.length)];
 }
 
-function generateHoursData() {
- const hours = ['24 hrs', '10am - 10pm', '12pm - 10pm'];
-   return hours[Math.floor(Math.random() * hours.length)];
-}
-
 function generateBathroomData() {
  return {
    type: generateTypeData(),
    city: generateCityData(),
    name: faker.company.companyName(),
-   hours: generateHoursData(),
    address: {
      street: faker.address.streetName(),
-     zipcode: faker.address.zipCode()
-   }
+     coord: {
+        lat: faker.address.latitude(),
+        lng: faker.address.longitude()
+     },
+   },
+   zipcode: faker.address.zipCode()
  }
 }
 
@@ -84,7 +82,7 @@ describe('Bathrooms API resource', function() {
 
      res = _res;
      res.should.have.status(200);
-     res.body.bathrooms.should.have.lengthOf.at.least(1);
+     res.body.bathrooms.should.have.length.of.at.least(1);
      return Bathroom.count();
     })
      .then(function(count) {
@@ -105,7 +103,7 @@ describe('Bathrooms API resource', function() {
 
        res.body.bathrooms.forEach(function(bathroom) {
          bathroom.should.be.a('object');
-         bathroom.should.include.keys('id', 'type', 'city', 'name', 'hours', 'address');
+         bathroom.should.include.keys('id', 'type', 'city', 'name', 'address', 'zipcode');
        });
 
        resBathroom = res.body.bathrooms[0];
@@ -117,8 +115,8 @@ describe('Bathrooms API resource', function() {
        resBathroom.type.should.equal(bathroom.type);
        resBathroom.city.should.equal(bathroom.city);
        resBathroom.name.should.equal(bathroom.name);
-       resBathroom.hours.should.equal(bathroom.hours);
        resBathroom.address.should.contain(bathroom.address.street);
+       resBathroom.zipcode.should.equal(bathroom.zipcode);
      });
    });
   });
@@ -136,13 +134,14 @@ describe('Bathrooms API resource', function() {
          res.should.have.status(201);
          res.should.be.json;
          res.body.should.be.a('object');
-         res.body.should.include.keys('id', 'type', 'city', 'name', 'hours', 'address');
+         res.body.should.include.keys('id', 'type', 'city', 'name', 'address', 'zipcode');
          res.body.id.should.not.be.null;
          res.body.type.should.equal(newBathroom.type);
          res.body.city.should.equal(newBathroom.city);
          res.body.name.should.equal(newBathroom.name);
          res.body.hours.should.equal(newBathroom.hours);
-         res.body.address.should.equal(`${newBathroom.address.street} ${newBathroom.address.zipcode}`);
+         res.body.address.should.equal(`${newBathroom.address.street}`);
+         res.body.zipcode.should.equal(newBathroom.zipcode);
 
          return Bathroom.findById(res.body.id);
        })
@@ -152,7 +151,7 @@ describe('Bathrooms API resource', function() {
          bathroom.name.should.equal(newBathroom.name);
          bathroom.hours.should.equal(newBathroom.hours);
          bathroom.address.street.should.equal(newBathroom.address.street);
-         bathroom.address.zipcode.should.equal(newBathroom.address.zipcode);
+         bathroom.zipcode.should.equal(newBathroom.zipcode);
        });
     });
   });
