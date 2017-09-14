@@ -11,7 +11,7 @@ const bathroomSchema = mongoose.Schema({
 			lng: Number
 		},
 	},
-	zipcode: {type: Number, required: true}
+	zipcode: {type: String, required: true}
 });
 
 bathroomSchema.virtual('addressString').get(function() {
