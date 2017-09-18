@@ -1,12 +1,10 @@
 var bathroomTemplate = (
-  "<div class='module'>" +
-    "<ul class='locations'>" +
+    "<il class='new-location'>" +
       "<p><span class='bathroom-location-name'></span></p>" +
       "<button class='delete-location'>" +
       "<span class='button-label'>Delete</span>" +
       "</button>" +
-    "</ul>" +
-  "</div>"
+    "</il>"
 );
 
 var BATHROOMS_URL = '/bathrooms';
@@ -17,7 +15,7 @@ function getAndDisplayBathrooms() {
     console.log('Rendering bathroom location');
     var bathroomElements = eachBathroom.bathrooms.map(function(bathroom) {
       var element = $(bathroomTemplate);
-      element.attr('class', bathroom.id);
+      element.attr('id', bathroom.id);
       var bathroomName = element.find('.bathroom-location-name');
       bathroomName.text(bathroom.name);
       return element;
@@ -63,10 +61,10 @@ function handleBathroomAdd() {
 }
 
 function handleBathroomDelete() {
-  $('.module').on('click', '.delete-location', function(e) {
+  $('.locations').on('click', '.delete-location', function(e) {
     e.preventDefault();
     console.log('Pew Pew!');
-    deleteBathroomLocation($(e.currentTarget).closest('.module').attr('class'));
+    deleteBathroomLocation($(e.currentTarget).closest('.new-location').attr('id'));
   });
 }
 
