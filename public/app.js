@@ -17,7 +17,7 @@ function getAndDisplayBathrooms() {
     console.log('Rendering bathroom location');
     var bathroomElements = eachBathroom.bathrooms.map(function(bathroom) {
       var element = $(bathroomTemplate);
-      element.attr('class', bathroom.class);
+      element.attr('class', bathroom.id);
       var bathroomName = element.find('.bathroom-location-name');
       bathroomName.text(bathroom.name);
       return element;
@@ -66,7 +66,7 @@ function handleBathroomDelete() {
   $('.module').on('click', '.delete-location', function(e) {
     e.preventDefault();
     console.log('Pew Pew!');
-    deleteBathroomLocation($(e.currentTarget).closest('.module').attr('.bathroom-location-name'));
+    deleteBathroomLocation($(e.currentTarget).closest('.module').attr('class'));
   });
 }
 
