@@ -63,8 +63,41 @@ function handleBathroomAdd() {
 function handleBathroomDelete() {
   $('.locations').on('click', '.delete-location', function(e) {
     e.preventDefault();
-    console.log('Pew Pew!');
     deleteBathroomLocation($(e.currentTarget).closest('.new-location').attr('id'));
+  });
+}
+
+function initMap() {
+  $.getJSON(BATHROOMS_URL, function(eachBathroom) {
+    //console.log(eachBathroom.bathrooms);
+    var coords = eachBathroom.bathrooms.map(function(detachedBathroom) {
+          return detachedBathroom.coord;
+    });
+    mapMarkers(coords);
+  }); 
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 10,
+      center: { lat: 29.9511, lng: -90.0715 }
+  });
+}
+
+function mapMarkers(coords) {
+  for (var i = 0; i < coords.length; i++) {
+    var lat = coords[i].lat;
+    return lat;
+  }
+  //console.log(lat); not logging anything
+  for (var i = 0; i < coords.length; i++) {
+  var lng = coords[i].lng;
+    return lng;
+  }
+  //console.log(lng); not logging anything
+  var marker = new google.maps.Marker({
+      position: { 
+        lat: lat,
+        lng: lng
+      },
+      setMap: map
   });
 }
 
@@ -73,45 +106,3 @@ $(function() {
   handleBathroomAdd();
   handleBathroomDelete();
 });
-
-
-
-/*
-var initMap = function() {
-    var options = {
-      center: {
-        lat: 29.9511,
-        lng: -90.0715
-      },
-      zoom: 10
-    }
-    var map = new google.maps.Map(document.getElementById('map'), options);
-  }
-  // initMap inside for closure //
-$(function() {
-  var RESULTS_URL = '/bathrooms';
-
-  function getBathroomsFromServer() {
-    $.getJSON(RESULTS_URL, function(bathrooms) {
-      state = bathrooms;
-      console.log(state);
-      for (let prop in state) {
-        let bathroomsArray = state[prop]
-        bathroomsArray.map(function(bathroom) {
-          return bathroom.coord;
-        });
-      }
-    });
-  }
-  getBathroomsFromServer();
-  initMap();
-});
-*/
-
-
-
-
-
-
-
-
