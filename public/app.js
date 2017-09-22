@@ -67,37 +67,43 @@ function handleBathroomDelete() {
   });
 }
 
+// terrible global variables //
+var map;
+var icon = 'http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_purple.png';
+
 function initMap() {
   $.getJSON(BATHROOMS_URL, function(eachBathroom) {
-    //console.log(eachBathroom.bathrooms);
+    //console.log('Retrieving bathroom data');
+    addInfoWindow(eachBathroom);
     var coords = eachBathroom.bathrooms.map(function(detachedBathroom) {
           return detachedBathroom.coord;
     });
-    mapMarkers(coords);
+    for (var i = 0; i < coords.length; i++) {
+        var eachCoord = coords[i];
+        //console.log('Here is', eachCoord);
+        addMarkers(eachCoord);
+    }
   }); 
-    var map = new google.maps.Map(document.getElementById('map'), {
+    var newOrleans = { lng: -90.0715, lat: 29.9511 };
+    map = new google.maps.Map(document.getElementById('map'), {
       zoom: 10,
-      center: { lat: 29.9511, lng: -90.0715 }
+      center: newOrleans
   });
 }
 
-function mapMarkers(coords) {
-  for (var i = 0; i < coords.length; i++) {
-    var lat = coords[i].lat;
-    return lat;
-  }
-  //console.log(lat); not logging anything
-  for (var i = 0; i < coords.length; i++) {
-  var lng = coords[i].lng;
-    return lng;
-  }
-  //console.log(lng); not logging anything
+function addInfoWindow(bathrooms) {
+  console.log(bathrooms);
+}
+
+// add marker function //
+function addMarkers(coords) {
   var marker = new google.maps.Marker({
-      position: { 
-        lat: lat,
-        lng: lng
-      },
-      setMap: map
+    position: coords,
+    map: map,
+    icon: icon
+  });
+  marker.addListener('click', function() {
+  infowindow.open(map, marker);
   });
 }
 
