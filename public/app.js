@@ -74,7 +74,6 @@ var icon = 'http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_purple.png'
 function initMap() {
   $.getJSON(BATHROOMS_URL, function(eachBathroom) {
     //console.log('Retrieving bathroom data');
-    addInfoWindow(eachBathroom);
     var coords = eachBathroom.bathrooms.map(function(detachedBathroom) {
           return detachedBathroom.coord;
     });
@@ -91,9 +90,19 @@ function initMap() {
   });
 }
 
+// working on addInfoWindow
+/*
 function addInfoWindow(bathrooms) {
   console.log(bathrooms);
+  for (var i = 0; i < bathrooms.length; i++) {
+    var eachName = bathrooms[i].name;
+    return eachName;
+  }
+  var infoWindow = new google.maps.InfoWindow({
+    content: eachName
+  });
 }
+*/
 
 // add marker function //
 function addMarkers(coords) {
@@ -101,9 +110,6 @@ function addMarkers(coords) {
     position: coords,
     map: map,
     icon: icon
-  });
-  marker.addListener('click', function() {
-  infowindow.open(map, marker);
   });
 }
 
