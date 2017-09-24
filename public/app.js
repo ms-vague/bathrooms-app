@@ -10,9 +10,9 @@ var bathroomTemplate = (
 var BATHROOMS_URL = '/bathrooms';
 
 function getAndDisplayBathrooms() {
-  console.log('Retrieving bathroom location');
+  //console.log('Retrieving bathroom location');
   $.getJSON(BATHROOMS_URL, function(eachBathroom) {
-    console.log('Rendering bathroom location');
+    //console.log('Rendering bathroom location');
     var bathroomElements = eachBathroom.bathrooms.map(function(bathroom) {
       var element = $(bathroomTemplate);
       element.attr('id', bathroom.id);
@@ -25,7 +25,7 @@ function getAndDisplayBathrooms() {
 }
 
 function addBathroomLocation(bathroom) {
-  console.log('Adding bathroom location: ' + bathroom);
+  //console.log('Adding bathroom location: ' + bathroom);
   $.ajax({
     method: 'POST',
     url: BATHROOMS_URL,
@@ -74,14 +74,12 @@ var icon = 'http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_purple.png'
 function initMap() {
   $.getJSON(BATHROOMS_URL, function(eachBathroom) {
     //console.log('Retrieving bathroom data');
-    var coords = eachBathroom.bathrooms.map(function(detachedBathroom) {
-          return detachedBathroom.coord;
+    var bathrooms = eachBathroom.bathrooms;
+    bathrooms.forEach(function(element) {
+      var coords = element.coord;
+      var names = element.names;
+      addMarkers(coords, names);
     });
-    for (var i = 0; i < coords.length; i++) {
-        var eachCoord = coords[i];
-        //console.log('Here is', eachCoord);
-        addMarkers(eachCoord);
-    }
   }); 
     var newOrleans = { lng: -90.0715, lat: 29.9511 };
     map = new google.maps.Map(document.getElementById('map'), {
@@ -90,26 +88,19 @@ function initMap() {
   });
 }
 
-// working on addInfoWindow
-/*
-function addInfoWindow(bathrooms) {
-  console.log(bathrooms);
-  for (var i = 0; i < bathrooms.length; i++) {
-    var eachName = bathrooms[i].name;
-    return eachName;
-  }
-  var infoWindow = new google.maps.InfoWindow({
-    content: eachName
-  });
-}
-*/
-
 // add marker function //
-function addMarkers(coords) {
+function addMarkers(coords, names) {
   var marker = new google.maps.Marker({
     position: coords,
     map: map,
     icon: icon
+  });
+
+  var infoWindow = new google.maps.InfoWindow({
+    content: names
+  });
+  marker.addListener('click', function() {
+    infoWindow.open(map, marker);
   });
 }
 
