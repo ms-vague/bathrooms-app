@@ -77,7 +77,7 @@ function initMap() {
     var bathrooms = eachBathroom.bathrooms;
     bathrooms.forEach(function(element) {
       var coords = element.coord;
-      var names = element.names;
+      var names = element.name;
       addMarkers(coords, names);
     });
   }); 
@@ -88,17 +88,18 @@ function initMap() {
   });
 }
 
-// add marker function //
+// add marker/infoWindow function //
 function addMarkers(coords, names) {
+  var infoWindow = new google.maps.InfoWindow({
+  content: names
+  });
+
   var marker = new google.maps.Marker({
     position: coords,
     map: map,
     icon: icon
   });
 
-  var infoWindow = new google.maps.InfoWindow({
-    content: names
-  });
   marker.addListener('click', function() {
     infoWindow.open(map, marker);
   });
