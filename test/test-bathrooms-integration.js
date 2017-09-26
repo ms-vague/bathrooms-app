@@ -165,9 +165,9 @@ describe('Bathrooms API resource', function() {
         name: 'bizz',
         hours: 'bang',
         address: {
-          street: 'boop',
-          zipcode: 'beep'
-        }
+          street: 'boop'
+        },
+        zipcode: 'beep'
       };
 
       return Bathroom
@@ -189,9 +189,8 @@ describe('Bathrooms API resource', function() {
           bathroom.type.should.equal(updateData.type);
           bathroom.city.should.equal(updateData.city);
           bathroom.name.should.equal(updateData.name);
-          bathroom.hours.should.equal(updateData.hours);
           bathroom.address.street.should.equal(updateData.address.street);
-          bathroom.address.zipcode.should.equal(updateData.address.zipcode);
+          bathroom.address.zipcode.should.equal(updateData.zipcode);
         });
     });
   });
