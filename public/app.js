@@ -11,9 +11,9 @@ var BATHROOMS_URL = '/bathrooms';
 
 function getAndDisplayBathrooms() {
   //console.log('Retrieving bathroom location');
-  $.getJSON(BATHROOMS_URL, function(eachBathroom) {
+  $.getJSON(BATHROOMS_URL, function(bathrooms) {
     //console.log('Rendering bathroom location');
-    var bathroomElements = eachBathroom.bathrooms.map(function(bathroom) {
+    var bathroomElements = bathrooms.map(function(bathroom) {
       var element = $(bathroomTemplate);
       element.attr('id', bathroom.id);
       var bathroomName = element.find('.bathroom-location-name');
@@ -72,13 +72,13 @@ var map;
 var icon = 'http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_purple.png';
 
 function initMap() {
-  $.getJSON(BATHROOMS_URL, function(eachBathroom) {
+  $.getJSON(BATHROOMS_URL, function(bathrooms) {
     //console.log('Retrieving bathroom data');
-    var bathrooms = eachBathroom.bathrooms;
     bathrooms.forEach(function(element) {
-      var coords = element.coord;
+      var coords = element.address.coord;
       var names = element.name;
-      addMarkers(coords, names);
+      var type = element.type;
+      addMarkers(coords, names, type);
     });
   }); 
     var newOrleans = { lng: -90.0715, lat: 29.9511 };
@@ -89,9 +89,9 @@ function initMap() {
 }
 
 // add marker/infoWindow function //
-function addMarkers(coords, names) {
+function addMarkers(coords, names, type) {
   var infoWindow = new google.maps.InfoWindow({
-  content: names
+  content: `${names}'s bathroom is ${type}.`
   });
 
   var marker = new google.maps.Marker({
@@ -100,8 +100,11 @@ function addMarkers(coords, names) {
     icon: icon
   });
 
-  marker.addListener('click', function() {
+  marker.addListener('mouseover', function() {
     infoWindow.open(map, marker);
+  });
+  marker.addListener('mouseout', function() {
+    infoWindow.close();
   });
 }
 
