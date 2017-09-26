@@ -1,4 +1,4 @@
-var bathroomTemplate = (
+let bathroomTemplate = (
     "<il class='new-location'>" +
       "<p><span class='bathroom-location-name'></span></p>" +
       "<button class='delete-location'>" +
@@ -7,16 +7,16 @@ var bathroomTemplate = (
     "</il>"
 );
 
-var BATHROOMS_URL = '/bathrooms';
+let BATHROOMS_URL = '/bathrooms';
 
 function getAndDisplayBathrooms() {
   //console.log('Retrieving bathroom location');
   $.getJSON(BATHROOMS_URL, function(bathrooms) {
     //console.log('Rendering bathroom location');
-    var bathroomElements = bathrooms.map(function(bathroom) {
-      var element = $(bathroomTemplate);
+    let bathroomElements = bathrooms.map(function(bathroom) {
+      let element = $(bathroomTemplate);
       element.attr('id', bathroom.id);
-      var bathroomName = element.find('.bathroom-location-name');
+      let bathroomName = element.find('.bathroom-location-name');
       bathroomName.text(bathroom.name);
       return element;
     });
@@ -68,7 +68,7 @@ function handleBathroomDelete() {
 }
 
 // terrible global variables //
-var map;
+let map;
 const icon = 'http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_purple.png';
 
 function initMap() {
