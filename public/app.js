@@ -10,9 +10,7 @@ let bathroomTemplate = (
 let BATHROOMS_URL = '/bathrooms';
 
 function getAndDisplayBathrooms() {
-  //console.log('Retrieving bathroom location');
   $.getJSON(BATHROOMS_URL, function(bathrooms) {
-    //console.log('Rendering bathroom location');
     let bathroomElements = bathrooms.map(function(bathroom) {
       let element = $(bathroomTemplate);
       element.attr('id', bathroom.id);
@@ -25,7 +23,6 @@ function getAndDisplayBathrooms() {
 }
 
 function addBathroomLocation(bathroom) {
-  //console.log('Adding bathroom location: ' + bathroom);
   $.ajax({
     method: 'POST',
     url: BATHROOMS_URL,
@@ -67,13 +64,13 @@ function handleBathroomDelete() {
   });
 }
 
-// terrible global variables //
+// google maps implementation //
+
 let map;
 const icon = 'http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_purple.png';
 
 function initMap() {
   $.getJSON(BATHROOMS_URL, function(bathrooms) {
-    //console.log('Retrieving bathroom data');
     bathrooms.forEach(function(element) {
       const coords = element.address.coord;
       const names = element.name;
@@ -88,7 +85,6 @@ function initMap() {
   });
 }
 
-// add marker/infoWindow function //
 function addMarkers(coords, names, type) {
   const infoWindow = new google.maps.InfoWindow({
   content: `${names}'s bathroom is ${type}.`
