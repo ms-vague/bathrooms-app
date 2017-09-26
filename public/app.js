@@ -69,19 +69,19 @@ function handleBathroomDelete() {
 
 // terrible global variables //
 var map;
-var icon = 'http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_purple.png';
+const icon = 'http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_purple.png';
 
 function initMap() {
   $.getJSON(BATHROOMS_URL, function(bathrooms) {
     //console.log('Retrieving bathroom data');
     bathrooms.forEach(function(element) {
-      var coords = element.address.coord;
-      var names = element.name;
-      var type = element.type;
+      const coords = element.address.coord;
+      const names = element.name;
+      const type = element.type;
       addMarkers(coords, names, type);
     });
   }); 
-    var newOrleans = { lng: -90.0715, lat: 29.9511 };
+    const newOrleans = { lng: -90.0715, lat: 29.9511 };
     map = new google.maps.Map(document.getElementById('map'), {
       zoom: 10,
       center: newOrleans
@@ -90,11 +90,11 @@ function initMap() {
 
 // add marker/infoWindow function //
 function addMarkers(coords, names, type) {
-  var infoWindow = new google.maps.InfoWindow({
+  const infoWindow = new google.maps.InfoWindow({
   content: `${names}'s bathroom is ${type}.`
   });
 
-  var marker = new google.maps.Marker({
+  const marker = new google.maps.Marker({
     position: coords,
     map: map,
     icon: icon
