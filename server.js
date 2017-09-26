@@ -16,10 +16,7 @@ app.get('/bathrooms', (req, res) => {
  .find()
  .exec() //query builder interface
  .then(bathrooms => {
-  res.json({
-   bathrooms: bathrooms.map(
-    (bathroom) => bathroom.apiRepr())
-  });
+  res.json(bathrooms);
  })
  .catch(
   err => {
@@ -54,6 +51,10 @@ app.post('/bathrooms', (req, res) => {
   name: req.body.name,
   address: {
     street: req.body.street,
+    coords: {
+      lat: req.body.lat,
+      lng: req.body.lng
+    },
   },
   zipcode: req.body.zipcode
  })
