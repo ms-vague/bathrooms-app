@@ -13,7 +13,7 @@ function getAndDisplayBathrooms() {
   $.getJSON(BATHROOMS_URL, function(bathrooms) {
     let bathroomElements = bathrooms.map(function(bathroom) {
       let element = $(bathroomTemplate);
-      element.attr('id', bathroom.id);
+      element.attr('id', bathroom._id);
       let bathroomName = element.find('.bathroom-location-name');
       bathroomName.text(bathroom.name);
       return element;
