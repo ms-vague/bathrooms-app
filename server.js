@@ -29,7 +29,7 @@ app.get('/bathrooms/:id', (req, res) => {
  Bathroom
  .findById(req.params.id)
  .exec()
- .then(bathroom => res.json(bathroom.apiRepr()))
+ .then(bathroom => res.json(bathroom))
  .catch(err => {
   console.error(err);
    res.status(500).json({message: 'Internal server error'})
