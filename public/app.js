@@ -54,6 +54,7 @@ function handleBathroomAdd() {
       street: $(e.currentTarget).find('.street').val(),
       zipcode: $(e.currentTarget).find('.zipcode').val()
     })
+    window.location.href = 'results.html';
   });
 }
 
