@@ -58,8 +58,6 @@ app.post('/bathrooms', (req, res) => {
   },
   zipcode: req.body.zipcode
  })
- .then(
-  bathroom => res.status(201).json(bathroom.apiRepr()))
  .catch(err => {
   console.error(err);
   res.status(500).json({message: 'Internal server error'});
