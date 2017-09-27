@@ -36,7 +36,7 @@ function addBathroomLocation(bathroom) {
 }
 
 function deleteBathroomLocation(bathroomId) {
-  console.log('Deleting bathroom location `' + bathroomId + '`');
+  //console.log('Deleting bathroom location `' + bathroomId + '`');
   $.ajax({
     url: BATHROOMS_URL + '/' + bathroomId,
     method: 'DELETE',
