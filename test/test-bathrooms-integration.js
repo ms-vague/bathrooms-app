@@ -30,7 +30,7 @@ function generateTypeData() {
 }
 
 function generateCityData() {
- const cities = ['New Orleans', 'Denver', 'Metairie'];
+ const cities = ['New Orleans', 'Boulder', 'Metairie'];
    return cities[Math.floor(Math.random() * cities.length)];
 }
 
@@ -82,11 +82,11 @@ describe('Bathrooms API resource', function() {
 
      res = _res;
      res.should.have.status(200);
-     res.body.bathrooms.should.have.length.of.at.least(1);
+     res.body.should.have.length.of.at.least(1);
      return Bathroom.count();
     })
      .then(function(count) {
-      res.body.bathrooms.should.have.lengthOf(count);
+      res.body.should.have.lengthOf(count);
      });
    });
 
@@ -98,26 +98,16 @@ describe('Bathrooms API resource', function() {
      .then(function(res) {
        res.should.have.status(200);
        res.should.be.json;
-       res.body.bathrooms.should.be.a('array');
-       res.body.bathrooms.should.have.length.of.at.least(1);
+       res.body.should.be.a('array');
+       res.body.should.have.length.of.at.least(1);
 
-       res.body.bathrooms.forEach(function(bathroom) {
-         bathroom.should.be.a('object');
-         bathroom.should.include.keys('id', 'type', 'city', 'name', 'address', 'zipcode');
+       res.body.forEach(function(bathroom) {
+         bathroom.should.include.keys('_id', '__v', 'type', 'city', 'name', 'address', 'zipcode');
        });
 
-       resBathroom = res.body.bathrooms[0];
+       resBathroom = res.body[0];
        return Bathroom.findById(resBathroom.id);
      })
-     .then(function(bathroom) {
-
-       resBathroom.id.should.equal(bathroom.id);
-       resBathroom.type.should.equal(bathroom.type);
-       resBathroom.city.should.equal(bathroom.city);
-       resBathroom.name.should.equal(bathroom.name);
-       resBathroom.address.should.contain(bathroom.address.street);
-       resBathroom.zipcode.should.equal(bathroom.zipcode);
-     });
    });
   });
 
@@ -126,7 +116,7 @@ describe('Bathrooms API resource', function() {
 
    it('should add a new bathroom location', function() {
      const newBathroom = generateBathroomData();
-
+     console.log('HERE I AM', newBathroom);
      return chai.request(app)
        .post('/bathrooms')
        .send(newBathroom)
@@ -140,7 +130,7 @@ describe('Bathrooms API resource', function() {
          res.body.city.should.equal(newBathroom.city);
          res.body.name.should.equal(newBathroom.name);
          res.body.hours.should.equal(newBathroom.hours);
-         res.body.address.should.equal(`${newBathroom.address.street}`);
+         res.body.address.should.equal(newBathroom.address.street);
          res.body.zipcode.should.equal(newBathroom.zipcode);
 
          return Bathroom.findById(res.body.id);
@@ -186,6 +176,7 @@ describe('Bathrooms API resource', function() {
           return Bathroom.findById(updateData.id).exec();
         })
         .then(function(bathroom) {
+          console.log('WHAAAAAAAT', bathroom);
           bathroom.type.should.equal(updateData.type);
           bathroom.city.should.equal(updateData.city);
           bathroom.name.should.equal(updateData.name);
