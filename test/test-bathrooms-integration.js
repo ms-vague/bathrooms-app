@@ -30,6 +30,7 @@ function generateTypeData() {
 }
 
 function generateCityData() {
+<<<<<<< HEAD
  const cities = ['New Orleans', 'Denver', 'Metairie'];
    return cities[Math.floor(Math.random() * cities.length)];
 }
@@ -39,16 +40,33 @@ function generateHoursData() {
    return hours[Math.floor(Math.random() * hours.length)];
 }
 
+=======
+ const cities = ['New Orleans', 'Boulder', 'Metairie'];
+   return cities[Math.floor(Math.random() * cities.length)];
+}
+
+>>>>>>> feature/tests
 function generateBathroomData() {
  return {
    type: generateTypeData(),
    city: generateCityData(),
    name: faker.company.companyName(),
+<<<<<<< HEAD
    hours: generateHoursData(),
    address: {
      street: faker.address.streetName(),
      zipcode: faker.address.zipCode()
    }
+=======
+   address: {
+     street: faker.address.streetName(),
+     coord: {
+        lat: faker.address.latitude(),
+        lng: faker.address.longitude()
+     },
+   },
+   zipcode: faker.address.zipCode()
+>>>>>>> feature/tests
  }
 }
 
@@ -84,11 +102,19 @@ describe('Bathrooms API resource', function() {
 
      res = _res;
      res.should.have.status(200);
+<<<<<<< HEAD
      res.body.bathrooms.should.have.length.of.at.least(1);
      return Bathroom.count();
     })
      .then(function(count) {
       res.body.bathrooms.should.have.length.of(count);
+=======
+     res.body.should.have.length.of.at.least(1);
+     return Bathroom.count();
+    })
+     .then(function(count) {
+      res.body.should.have.lengthOf(count);
+>>>>>>> feature/tests
      });
    });
 
@@ -100,6 +126,7 @@ describe('Bathrooms API resource', function() {
      .then(function(res) {
        res.should.have.status(200);
        res.should.be.json;
+<<<<<<< HEAD
        res.body.bathrooms.should.be.a('array');
        res.body.bathrooms.should.have.length.of.at.least(1);
 
@@ -120,6 +147,18 @@ describe('Bathrooms API resource', function() {
        resBathroom.hours.should.equal(bathroom.hours);
        resBathroom.address.should.contain(bathroom.address.street);
      });
+=======
+       res.body.should.be.a('array');
+       res.body.should.have.length.of.at.least(1);
+
+       res.body.forEach(function(bathroom) {
+         bathroom.should.include.keys('_id', '__v', 'type', 'city', 'name', 'address', 'zipcode');
+       });
+
+       resBathroom = res.body[0];
+       return Bathroom.findById(resBathroom.id);
+     })
+>>>>>>> feature/tests
    });
   });
 
@@ -128,7 +167,10 @@ describe('Bathrooms API resource', function() {
 
    it('should add a new bathroom location', function() {
      const newBathroom = generateBathroomData();
+<<<<<<< HEAD
 
+=======
+>>>>>>> feature/tests
      return chai.request(app)
        .post('/bathrooms')
        .send(newBathroom)
@@ -136,13 +178,22 @@ describe('Bathrooms API resource', function() {
          res.should.have.status(201);
          res.should.be.json;
          res.body.should.be.a('object');
+<<<<<<< HEAD
          res.body.should.include.keys('id', 'type', 'city', 'name', 'hours', 'address');
+=======
+         res.body.should.include.keys('id', 'type', 'city', 'name', 'address', 'zipcode');
+>>>>>>> feature/tests
          res.body.id.should.not.be.null;
          res.body.type.should.equal(newBathroom.type);
          res.body.city.should.equal(newBathroom.city);
          res.body.name.should.equal(newBathroom.name);
          res.body.hours.should.equal(newBathroom.hours);
+<<<<<<< HEAD
          res.body.address.should.equal(`${newBathroom.address.street} ${newBathroom.address.zipcode}`);
+=======
+         res.body.address.should.equal(newBathroom.address.street);
+         res.body.zipcode.should.equal(newBathroom.zipcode);
+>>>>>>> feature/tests
 
          return Bathroom.findById(res.body.id);
        })
@@ -152,8 +203,78 @@ describe('Bathrooms API resource', function() {
          bathroom.name.should.equal(newBathroom.name);
          bathroom.hours.should.equal(newBathroom.hours);
          bathroom.address.street.should.equal(newBathroom.address.street);
+<<<<<<< HEAD
          bathroom.address.zipcode.should.equal(newBathroom.address.zipcode);
        });
     });
   });
+=======
+         bathroom.zipcode.should.equal(newBathroom.zipcode);
+       });
+    });
+  });
+
+  describe('PUT endpoint', function() {
+
+    it('should update fields you send over', function() {
+      const updateData = {
+        type: 'foo',
+        city: 'bar',
+        name: 'bizz',
+        hours: 'bang',
+        address: {
+          street: 'boop'
+        },
+        zipcode: 'beep'
+      };
+
+      return Bathroom
+        .findOne()
+        .exec()
+        .then(function(bathroom) {
+          updateData.id = bathroom.id;
+
+          return chai.request(app)
+          .put(`/bathrooms/${bathroom.id}`)
+          .send(updateData);
+        })
+        .then(function(res) {
+          res.should.have.status(204);
+
+          return Bathroom.findById(updateData.id).exec();
+        })
+        .then(function(bathroom) {
+          console.log('WHAAAAAAAT', bathroom);
+          bathroom.type.should.equal(updateData.type);
+          bathroom.city.should.equal(updateData.city);
+          bathroom.name.should.equal(updateData.name);
+          bathroom.address.street.should.equal(updateData.address.street);
+          bathroom.address.zipcode.should.equal(updateData.zipcode);
+        });
+    });
+  });
+
+  describe('DELETE endpoint', function() {
+
+    it('should delete a post by id', function() {
+
+      let bathroom;
+
+      return Bathroom
+        .findOne()
+        .exec()
+        .then(function(_bathroom) {
+          bathroom = _bathroom;
+          return chai.request(app).delete(`/bathrooms/${bathroom.id}`);
+        })
+        .then(function(res) {
+          res.should.have.status(204);
+          return Bathroom.findById(bathroom.id).exec();
+        })
+        .then(function(_bathroom) {
+          should.not.exist(_bathroom);
+        });
+    });
+  });
+>>>>>>> feature/tests
 });

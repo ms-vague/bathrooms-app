@@ -6,7 +6,7 @@ const {server, app} = require('../server');
 const should = chai.should();
 
 chai.use(chaiHttp);
-
+ 
 describe('index page', function() {
 	it('index exists', function() {
 		return chai.request(app)
@@ -17,3 +17,17 @@ describe('index page', function() {
 		});
 	});
 });
+<<<<<<< HEAD
+=======
+
+describe('results page', function() {
+  it('results page exists', function() {
+    return chai.request(app)
+    .get('/index.html')
+    .end(function(err, res) {
+      res.should.have.status(200);
+      res.should.be.html;
+    });
+  });
+});
+>>>>>>> feature/tests
