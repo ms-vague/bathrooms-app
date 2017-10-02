@@ -116,7 +116,6 @@ describe('Bathrooms API resource', function() {
 
    it('should add a new bathroom location', function() {
      const newBathroom = generateBathroomData();
-     console.log('HERE I AM', newBathroom);
      return chai.request(app)
        .post('/bathrooms')
        .send(newBathroom)
