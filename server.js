@@ -40,9 +40,9 @@ app.post('/bathrooms', (req, res) => {
  const requiredFields = ['type', 'city', 'name', 'street', 'zipcode'];
  requiredFields.forEach(field => {
   if (!(field in req.body && req.body[field])) {
-    const message = `Missing ${field} in response body.`;
+    const message = `Missing ${field} in request body.`;
     console.error(message);
-    res.status(400).send({message});
+    res.status(400).send(message);
   }
  });
 
@@ -60,7 +60,7 @@ app.post('/bathrooms', (req, res) => {
   },
   zipcode: req.body.zipcode
  })
- //.then(bathroom => res.status(201).json(bathroom.apiRepr()))
+ .then(bathroom => res.status(201).json(bathroom.apiRepr()))
  .catch(err => {
     console.error(err);
     res.status(500).json({error: 'Internal server error'});
