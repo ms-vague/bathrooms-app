@@ -50,7 +50,7 @@ app.post('/bathrooms', (req, res) => {
   city: req.body.city,
   name: req.body.name,
   address: {
-    street: req.body.street,
+    street: req.body.address.street,
     coords: {
       lat: req.body.lat,
       lng: req.body.lng
