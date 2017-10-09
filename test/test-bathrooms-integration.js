@@ -129,7 +129,7 @@ describe('Bathrooms API resource', function() {
          res.body.city.should.equal(newBathroom.city);
          res.body.name.should.equal(newBathroom.name);
          res.body.hours.should.equal(newBathroom.hours);
-         res.body.address.should.equal(newBathroom.address.street);
+         res.body.address.street.should.equal(newBathroom.address.street);
          res.body.zipcode.should.equal(newBathroom.zipcode);
 
          return Bathroom.findById(res.body.id);
@@ -175,7 +175,6 @@ describe('Bathrooms API resource', function() {
           return Bathroom.findById(updateData.id).exec();
         })
         .then(function(bathroom) {
-          console.log('WHAAAAAAAT', bathroom);
           bathroom.type.should.equal(updateData.type);
           bathroom.city.should.equal(updateData.city);
           bathroom.name.should.equal(updateData.name);
