@@ -49,7 +49,7 @@ app.post('/bathrooms', (req, res) => {
     } 
   }
 });
- 
+
  Bathroom
  .create({
   type: req.body.type,
@@ -80,7 +80,7 @@ app.put('/bathrooms/:id', (req, res) => {
   res.status(400).json({message: message});
  }
  const toUpdate = {};
- const updateableFields = ['type', 'city', 'name', 'street', 'zipcode'];
+ const updateableFields = ['type', 'city', 'name', 'address', 'zipcode'];
 
  updateableFields.forEach(field => {
   if (field in req.body) {
