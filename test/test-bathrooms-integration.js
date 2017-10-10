@@ -3,8 +3,6 @@ const chaiHttp = require('chai-http');
 const faker = require('faker');
 const mongoose = require('mongoose');
 
-// this makes the should syntax available throughout
-// this module
 const should = chai.should();
 
 const {Bathroom} = require('../models');
@@ -30,34 +28,15 @@ function generateTypeData() {
 }
 
 function generateCityData() {
-<<<<<<< HEAD
- const cities = ['New Orleans', 'Denver', 'Metairie'];
-   return cities[Math.floor(Math.random() * cities.length)];
-}
-
-function generateHoursData() {
- const hours = ['24 hrs', '10am - 10pm', '12pm - 10pm'];
-   return hours[Math.floor(Math.random() * hours.length)];
-}
-
-=======
  const cities = ['New Orleans', 'Boulder', 'Metairie'];
    return cities[Math.floor(Math.random() * cities.length)];
 }
 
->>>>>>> feature/tests
 function generateBathroomData() {
  return {
    type: generateTypeData(),
    city: generateCityData(),
    name: faker.company.companyName(),
-<<<<<<< HEAD
-   hours: generateHoursData(),
-   address: {
-     street: faker.address.streetName(),
-     zipcode: faker.address.zipCode()
-   }
-=======
    address: {
      street: faker.address.streetName(),
      coord: {
@@ -66,7 +45,6 @@ function generateBathroomData() {
      },
    },
    zipcode: faker.address.zipCode()
->>>>>>> feature/tests
  }
 }
 
@@ -102,19 +80,11 @@ describe('Bathrooms API resource', function() {
 
      res = _res;
      res.should.have.status(200);
-<<<<<<< HEAD
-     res.body.bathrooms.should.have.length.of.at.least(1);
-     return Bathroom.count();
-    })
-     .then(function(count) {
-      res.body.bathrooms.should.have.length.of(count);
-=======
      res.body.should.have.length.of.at.least(1);
      return Bathroom.count();
     })
      .then(function(count) {
       res.body.should.have.lengthOf(count);
->>>>>>> feature/tests
      });
    });
 
@@ -126,28 +96,6 @@ describe('Bathrooms API resource', function() {
      .then(function(res) {
        res.should.have.status(200);
        res.should.be.json;
-<<<<<<< HEAD
-       res.body.bathrooms.should.be.a('array');
-       res.body.bathrooms.should.have.length.of.at.least(1);
-
-       res.body.bathrooms.forEach(function(bathroom) {
-         bathroom.should.be.a('object');
-         bathroom.should.include.keys('id', 'type', 'city', 'name', 'hours', 'address');
-       });
-
-       resBathroom = res.body.bathrooms[0];
-       return Bathroom.findById(resBathroom.id);
-     })
-     .then(function(bathroom) {
-
-       resBathroom.id.should.equal(bathroom.id);
-       resBathroom.type.should.equal(bathroom.type);
-       resBathroom.city.should.equal(bathroom.city);
-       resBathroom.name.should.equal(bathroom.name);
-       resBathroom.hours.should.equal(bathroom.hours);
-       resBathroom.address.should.contain(bathroom.address.street);
-     });
-=======
        res.body.should.be.a('array');
        res.body.should.have.length.of.at.least(1);
 
@@ -158,7 +106,6 @@ describe('Bathrooms API resource', function() {
        resBathroom = res.body[0];
        return Bathroom.findById(resBathroom.id);
      })
->>>>>>> feature/tests
    });
   });
 
@@ -167,10 +114,6 @@ describe('Bathrooms API resource', function() {
 
    it('should add a new bathroom location', function() {
      const newBathroom = generateBathroomData();
-<<<<<<< HEAD
-
-=======
->>>>>>> feature/tests
      return chai.request(app)
        .post('/bathrooms')
        .send(newBathroom)
@@ -178,22 +121,13 @@ describe('Bathrooms API resource', function() {
          res.should.have.status(201);
          res.should.be.json;
          res.body.should.be.a('object');
-<<<<<<< HEAD
-         res.body.should.include.keys('id', 'type', 'city', 'name', 'hours', 'address');
-=======
          res.body.should.include.keys('id', 'type', 'city', 'name', 'address', 'zipcode');
->>>>>>> feature/tests
          res.body.id.should.not.be.null;
          res.body.type.should.equal(newBathroom.type);
          res.body.city.should.equal(newBathroom.city);
          res.body.name.should.equal(newBathroom.name);
-         res.body.hours.should.equal(newBathroom.hours);
-<<<<<<< HEAD
-         res.body.address.should.equal(`${newBathroom.address.street} ${newBathroom.address.zipcode}`);
-=======
          res.body.address.should.equal(newBathroom.address.street);
          res.body.zipcode.should.equal(newBathroom.zipcode);
->>>>>>> feature/tests
 
          return Bathroom.findById(res.body.id);
        })
@@ -201,14 +135,7 @@ describe('Bathrooms API resource', function() {
          bathroom.type.should.equal(newBathroom.type);
          bathroom.city.should.equal(newBathroom.city);
          bathroom.name.should.equal(newBathroom.name);
-         bathroom.hours.should.equal(newBathroom.hours);
          bathroom.address.street.should.equal(newBathroom.address.street);
-<<<<<<< HEAD
-         bathroom.address.zipcode.should.equal(newBathroom.address.zipcode);
-       });
-    });
-  });
-=======
          bathroom.zipcode.should.equal(newBathroom.zipcode);
        });
     });
@@ -244,12 +171,11 @@ describe('Bathrooms API resource', function() {
           return Bathroom.findById(updateData.id).exec();
         })
         .then(function(bathroom) {
-          console.log('WHAAAAAAAT', bathroom);
           bathroom.type.should.equal(updateData.type);
           bathroom.city.should.equal(updateData.city);
           bathroom.name.should.equal(updateData.name);
           bathroom.address.street.should.equal(updateData.address.street);
-          bathroom.address.zipcode.should.equal(updateData.zipcode);
+          bathroom.zipcode.should.equal(updateData.zipcode);
         });
     });
   });
@@ -276,5 +202,4 @@ describe('Bathrooms API resource', function() {
         });
     });
   });
->>>>>>> feature/tests
 });
