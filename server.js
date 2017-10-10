@@ -37,15 +37,19 @@ app.get('/bathrooms/:id', (req, res) => {
 });
 
 app.post('/bathrooms', (req, res) => {
- const requiredFields = ['type', 'city', 'name', 'street', 'zipcode'];
+ const requiredFields = ['type', 'city', 'name', 'address', 'zipcode'];
  requiredFields.forEach(field => {
-  if (!(field in req.body && req.body[field])) {
-    const message = `Missing ${field} in request body.`;
-    console.error(message);
-    res.status(400).send(message);
-  }
- });
-
+  if (!(field in req.body && req.body[field])) {
+    if (typeof req.body[field] === 'object') {
+      Object.keys(req.body[field]).forEach(field => {
+        const message = `Missing ${field} in request body.`;
+        console.error(message);
+        res.status(400).send(message);
+      });
+    } 
+  }
+});
+ 
  Bathroom
  .create({
   type: req.body.type,
@@ -58,9 +62,10 @@ app.post('/bathrooms', (req, res) => {
       lng: req.body.lng
     },
   },
+
   zipcode: req.body.zipcode
  })
- .then(bathroom => res.status(201).json(bathroom.apiRepr()))
+ .then((bathroom) => res.status(201).json(bathroom.apiRepr()))
  .catch(err => {
     console.error(err);
     res.status(500).json({error: 'Internal server error'});
