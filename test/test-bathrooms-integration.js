@@ -173,12 +173,11 @@ describe('Bathrooms API resource', function() {
           return Bathroom.findById(updateData.id).exec();
         })
         .then(function(bathroom) {
-          console.log('This', bathroom.address.street);
           bathroom.type.should.equal(updateData.type);
           bathroom.city.should.equal(updateData.city);
           bathroom.name.should.equal(updateData.name);
           bathroom.address.street.should.equal(updateData.address.street);
-          bathroom.address.zipcode.should.equal(updateData.zipcode);
+          bathroom.zipcode.should.equal(updateData.zipcode);
         });
     });
   });
