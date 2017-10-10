@@ -3,8 +3,6 @@ const chaiHttp = require('chai-http');
 const faker = require('faker');
 const mongoose = require('mongoose');
 
-// this makes the should syntax available throughout
-// this module
 const should = chai.should();
 
 const {Bathroom} = require('../models');
