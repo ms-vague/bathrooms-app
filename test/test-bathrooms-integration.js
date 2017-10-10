@@ -128,7 +128,6 @@ describe('Bathrooms API resource', function() {
          res.body.type.should.equal(newBathroom.type);
          res.body.city.should.equal(newBathroom.city);
          res.body.name.should.equal(newBathroom.name);
-         res.body.hours.should.equal(newBathroom.hours);
          res.body.address.should.equal(newBathroom.address.street);
          res.body.zipcode.should.equal(newBathroom.zipcode);
 
@@ -138,7 +137,6 @@ describe('Bathrooms API resource', function() {
          bathroom.type.should.equal(newBathroom.type);
          bathroom.city.should.equal(newBathroom.city);
          bathroom.name.should.equal(newBathroom.name);
-         bathroom.hours.should.equal(newBathroom.hours);
          bathroom.address.street.should.equal(newBathroom.address.street);
          bathroom.zipcode.should.equal(newBathroom.zipcode);
        });
@@ -175,7 +173,7 @@ describe('Bathrooms API resource', function() {
           return Bathroom.findById(updateData.id).exec();
         })
         .then(function(bathroom) {
-          console.log('WHAAAAAAAT', bathroom);
+          console.log('This', bathroom.address.street);
           bathroom.type.should.equal(updateData.type);
           bathroom.city.should.equal(updateData.city);
           bathroom.name.should.equal(updateData.name);
