@@ -5,8 +5,8 @@
       "name": "LGBT Center",
       "address": {
          "coord": {
-            "lat": 29.951374,
-            "lng": -90.10014
+            "lng": -90.10014,
+            "lat": 29.951374
          },
          "street": "2727 S Broad Ave"
       },
@@ -18,8 +18,8 @@
       "name": "Robert E. Smith Library",
       "address": {
          "coord": {
-            "lat": 30.005005,
-            "lng": -90.10745
+            "lng": -90.10745,
+            "lat": 30.005005
          },
          "street": "6301 Canal Blvd"
       },
@@ -31,8 +31,8 @@
       "name": "Monkey Monkey",
       "address": {
          "coord": {
-            "lat": 29.973753,
-            "lng": -90.10181
+            "lng": -90.10181,
+            "lat": 29.973753
          },
          "street": "4641 South Carrollton Ave"
       },
