@@ -100,7 +100,7 @@ describe('Bathrooms API resource', function() {
        res.body.should.have.length.of.at.least(1);
 
        res.body.forEach(function(bathroom) {
-         bathroom.should.include.keys('_id', '__v', 'type', 'city', 'name', 'address', 'zipcode');
+         bathroom.should.include.keys('type', 'city', 'name', 'address', 'zipcode');
        });
 
        resBathroom = res.body[0];
