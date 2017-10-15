@@ -37,14 +37,18 @@ app.get('/bathrooms/:id', (req, res) => {
 });
 
 app.post('/bathrooms', (req, res) => {
- const requiredFields = ['type', 'city', 'name', 'street', 'zipcode'];
+ const requiredFields = ['type', 'city', 'name', 'address', 'zipcode'];
  requiredFields.forEach(field => {
-  if (!(field in req.body && req.body[field])) {
-    const message = `Missing ${field} in request body.`;
-    console.error(message);
-    res.status(400).send(message);
-  }
- });
+  if (!(field in req.body && req.body[field])) {
+    if (typeof req.body[field] === 'object') {
+      Object.keys(req.body[field]).forEach(field => {
+        const message = `Missing ${field} in request body.`;
+        console.error(message);
+        res.status(400).send(message);
+      });
+    } 
+  }
+});
 
  Bathroom
  .create({
@@ -53,9 +57,9 @@ app.post('/bathrooms', (req, res) => {
   name: req.body.name,
   address: {
     street: req.body.address.street,
-    coords: {
-      lat: req.body.lat,
-      lng: req.body.lng
+    coord: {
+      lat: req.body.address.coord.lng,
+      lng: req.body.address.coord.lat
     },
   },
   zipcode: req.body.zipcode
@@ -75,7 +79,7 @@ app.put('/bathrooms/:id', (req, res) => {
   res.status(400).json({message: message});
  }
  const toUpdate = {};
- const updateableFields = ['type', 'city', 'name', 'street', 'zipcode'];
+ const updateableFields = ['type', 'city', 'name', 'address', 'zipcode'];
 
  updateableFields.forEach(field => {
   if (field in req.body) {

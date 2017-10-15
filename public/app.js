@@ -76,6 +76,7 @@ function initMap() {
       const coords = element.address.coord;
       const names = element.name;
       const type = element.type;
+      console.log(coords);
       addMarkers(coords, names, type);
     });
   }); 

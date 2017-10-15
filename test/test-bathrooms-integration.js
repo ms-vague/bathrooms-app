@@ -3,8 +3,6 @@ const chaiHttp = require('chai-http');
 const faker = require('faker');
 const mongoose = require('mongoose');
 
-// this makes the should syntax available throughout
-// this module
 const should = chai.should();
 
 const {Bathroom} = require('../models');
@@ -102,7 +100,7 @@ describe('Bathrooms API resource', function() {
        res.body.should.have.length.of.at.least(1);
 
        res.body.forEach(function(bathroom) {
-         bathroom.should.include.keys('_id', '__v', 'type', 'city', 'name', 'address', 'zipcode');
+         bathroom.should.include.keys('type', 'city', 'name', 'address', 'zipcode');
        });
 
        resBathroom = res.body[0];
@@ -128,8 +126,12 @@ describe('Bathrooms API resource', function() {
          res.body.type.should.equal(newBathroom.type);
          res.body.city.should.equal(newBathroom.city);
          res.body.name.should.equal(newBathroom.name);
+<<<<<<< HEAD
          res.body.hours.should.equal(newBathroom.hours);
          res.body.address.street.should.equal(newBathroom.address.street);
+=======
+         res.body.address.should.equal(newBathroom.address.street);
+>>>>>>> feature/tests
          res.body.zipcode.should.equal(newBathroom.zipcode);
 
          return Bathroom.findById(res.body.id);
@@ -138,7 +140,6 @@ describe('Bathrooms API resource', function() {
          bathroom.type.should.equal(newBathroom.type);
          bathroom.city.should.equal(newBathroom.city);
          bathroom.name.should.equal(newBathroom.name);
-         bathroom.hours.should.equal(newBathroom.hours);
          bathroom.address.street.should.equal(newBathroom.address.street);
          bathroom.zipcode.should.equal(newBathroom.zipcode);
        });
@@ -179,7 +180,7 @@ describe('Bathrooms API resource', function() {
           bathroom.city.should.equal(updateData.city);
           bathroom.name.should.equal(updateData.name);
           bathroom.address.street.should.equal(updateData.address.street);
-          bathroom.address.zipcode.should.equal(updateData.zipcode);
+          bathroom.zipcode.should.equal(updateData.zipcode);
         });
     });
   });

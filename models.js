@@ -7,9 +7,9 @@ const bathroomSchema = mongoose.Schema({
 	address: {
 		street: {type: String, required: true},
 		coord: {
-			lat: Number,
-			lng: Number
-		},
+			lat: {type: Number, required: true},
+			lng: {type: Number, required: true}
+		}
 	},
 	zipcode: {type: String, required: true}
 });
