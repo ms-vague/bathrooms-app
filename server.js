@@ -58,8 +58,8 @@ app.post('/bathrooms', (req, res) => {
   address: {
     street: req.body.address.street,
     coord: {
-      lat: req.body.address.coord.lat,
-      lng: req.body.address.coord.lng
+      lat: req.body.address.coord.lng,
+      lng: req.body.address.coord.lat
     },
   },
   zipcode: req.body.zipcode
