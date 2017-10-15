@@ -62,10 +62,9 @@ app.post('/bathrooms', (req, res) => {
       lng: req.body.address.coord.lng
     },
   },
-
   zipcode: req.body.zipcode
  })
- .then((bathroom) => res.status(201).json(bathroom.apiRepr()))
+ .then(bathroom => res.status(201).json(bathroom.apiRepr()))
  .catch(err => {
     console.error(err);
     res.status(500).json({error: 'Internal server error'});
