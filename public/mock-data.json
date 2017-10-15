@@ -1,42 +1,42 @@
 [
-		{ 
-			"type": "neutral", 
-			"city": "New Orleans", 
-			"name": "LGBT Center", 
-			"hours": "various", 
-			"address": { 
-				"coord": {
-					"lat": 29.951375,
-					"lng": -90.100141
-				},
-				"street": "2727 S Broad Ave", 
-				"zipcode": "70125" }
-		},
-		{ 
-			"type": "gendered", 
-			"city": "New Orleans", 
-			"name": "Robert E. Smith Library", 
-			"hours" : "10am - 8pm", 
-			"address": { 
-				"coord": {
-					"lat": 30.005005,
-					"lng": -90.107449
-				},
-				"street": "6301 Canal Blvd", 
-				"zipcode": "70124" }
-		},
-		{ 
-			"type": "gendered", 
-			"city": "New Orleans", 
-			"name": "Monkey Monkey", 
-			"hours": "6am - 8pm", 
-			"address": { 
-				"coord": {
-					"lat": 29.973753,
-					"lng": -90.101803
-				},
-				"street": "4641 South Carrollton Ave", 
-				"zipcode": "70119" }
-		}
+   {
+      "type": "neutral",
+      "city": "New Orleans",
+      "name": "LGBT Center",
+      "address": {
+         "coord": {
+            "lat": 29.951374,
+            "lng": -90.10014
+         },
+         "street": "2727 S Broad Ave"
+      },
+      "zipcode": "70125"
+   },
+   {
+      "type": "gendered",
+      "city": "New Orleans",
+      "name": "Robert E. Smith Library",
+      "address": {
+         "coord": {
+            "lat": 30.005005,
+            "lng": -90.10745
+         },
+         "street": "6301 Canal Blvd"
+      },
+      "zipcode": "70124"
+   },
+   {
+      "type": "gendered",
+      "city": "New Orleans",
+      "name": "Monkey Monkey",
+      "address": {
+         "coord": {
+            "lat": 29.973753,
+            "lng": -90.10181
+         },
+         "street": "4641 South Carrollton Ave"
+      },
+      "zipcode": "70119"
+   }
 ]  
  
