@@ -1,6 +1,7 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
+const NodeGeocoder = require('node-geocoder');
 
 mongoose.Promise = global.Promise;
 
@@ -10,6 +11,15 @@ const {Bathroom} = require('./models');
 const app = express();
 app.use(bodyParser.json());
 app.use(express.static('public'));
+
+const options = {
+  provider: 'google',
+  httpAdapter: 'https',
+  apiKey: 'AIzaSyD5Fc9IndJBZKyOerxJT8YSYFWBP7U-Au4',
+  formatter: null
+};
+
+const geocoder = NodeGeocoder(options);
 
 app.get('/bathrooms', (req, res) => {
  Bathroom
@@ -38,6 +48,7 @@ app.get('/bathrooms/:id', (req, res) => {
 
 app.post('/bathrooms', (req, res) => {
  const requiredFields = ['type', 'city', 'name', 'address', 'zipcode'];
+ const requiredAddressFields = [];
  requiredFields.forEach(field => {
   if (!(field in req.body && req.body[field])) {
     if (typeof req.body[field] === 'object') {
@@ -50,21 +61,24 @@ app.post('/bathrooms', (req, res) => {
   }
 });
 
- Bathroom
+Bathroom
  .create({
   type: req.body.type,
   city: req.body.city,
   name: req.body.name,
   address: {
     street: req.body.address.street,
-    coord: {
-      lat: req.body.address.coord.lng,
-      lng: req.body.address.coord.lat
-    },
+    state: req.body.address.state
   },
   zipcode: req.body.zipcode
+})
+ .then(bathroom => {
+    const address = `${bathroom.address.street} ${bathroom.address.state}`; 
+    geocoder.geocode(address, function(err, geoRes) {
+      const geoBathroom = Object.assign({}, geoRes, bathroom);
+      res.status(201).json(geoBathroom);
+    })
  })
- .then(bathroom => res.status(201).json(bathroom.apiRepr()))
  .catch(err => {
     console.error(err);
     res.status(500).json({error: 'Internal server error'});
@@ -110,14 +124,14 @@ app.use('*', function(req, res) {
 let server;
 
 // this function connects to our database, then starts the server
-function runServer() {
+function runServer(database, port) {
   return new Promise((resolve, reject) => {
-    mongoose.connect(DATABASE_URL, err => {
+    mongoose.connect(database || DATABASE_URL, err => {
       if (err) {
         return reject(err);
       }
-      server = app.listen(PORT, () => {
-        console.log(`Your app is listening on port ${PORT}`);
+      server = app.listen(port || PORT, () => {
+        console.log(`Your app is listening on port ${port || PORT}`);
         resolve();
       })
       .on('error', err => {
