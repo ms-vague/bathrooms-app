@@ -4,7 +4,7 @@
   "description": "Unit 2 Capstone",
   "main": "server.js",
   "scripts": {
-    "test": "mocha /"
+    "test": "PORT=8081  mocha /"
   },
   "author": "",
   "license": "MIT",
@@ -17,6 +17,7 @@
     "mocha": "^3.4.2",
     "mongoose": "^4.11.11",
     "morgan": "^1.8.2",
+    "node-geocoder": "^3.21.0",
     "uuid": "^3.1.0"
   }
 }
