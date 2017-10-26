@@ -1,42 +1,55 @@
 [
-   {
-      "type": "neutral",
-      "city": "New Orleans",
-      "name": "LGBT Center",
-      "address": {
-         "coord": {
-            "lng": -90.10014,
-            "lat": 29.951374
-         },
-         "street": "2727 S Broad Ave"
+  {
+    "type": "neutral",
+    "city": "New Orleans",
+    "name": "LGBT Center",
+    "address": {
+      "coord": {
+        "lng": -90.10014,
+        "lat": 29.951374
       },
-      "zipcode": "70125"
-   },
-   {
-      "type": "gendered",
-      "city": "New Orleans",
-      "name": "Robert E. Smith Library",
-      "address": {
-         "coord": {
-            "lng": -90.10745,
-            "lat": 30.005005
-         },
-         "street": "6301 Canal Blvd"
+      "street": "2727 S Broad Ave"
+    },
+    "zipcode": "70125"
+  },
+  {
+    "type": "gendered",
+    "city": "New Orleans",
+    "name": "Robert E. Smith Library",
+    "address": {
+      "coord": {
+        "lng": -90.10745,
+        "lat": 30.005005
       },
-      "zipcode": "70124"
-   },
-   {
-      "type": "gendered",
-      "city": "New Orleans",
-      "name": "Monkey Monkey",
-      "address": {
-         "coord": {
-            "lng": -90.10181,
-            "lat": 29.973753
-         },
-         "street": "4641 South Carrollton Ave"
+      "street": "6301 Canal Blvd"
+    },
+    "zipcode": "70124"
+  },
+  {
+    "type": "gendered",
+    "city": "New Orleans",
+    "name": "Monkey Monkey",
+    "address": {
+      "coord": {
+        "lng": -90.10181,
+        "lat": 29.973753
       },
-      "zipcode": "70119"
-   }
+      "street": "4641 South Carrollton Ave"
+    },
+    "zipcode": "70119"
+  },
+  {
+    "type": "gendered",
+    "city": "New Orleans",
+    "name": "Burger King",
+    "address": {
+      "coord": {
+        "lng": -90.119574,
+        "lat": 29.956189
+      },
+      "street": "2423 South Carrollton Ave"
+    },
+    "zipcode": "70118"
+  }
 ]  
  
