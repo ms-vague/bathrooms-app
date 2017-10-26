@@ -6,16 +6,13 @@ const bathroomSchema = mongoose.Schema({
 	name: {type: String, required: true},
 	address: {
 		street: {type: String, required: true},
-		coord: {
-			lat: {type: Number, required: true},
-			lng: {type: Number, required: true}
-		}
+		state: {type: String, required: true}
 	},
 	zipcode: {type: String, required: true}
 });
 
 bathroomSchema.virtual('addressString').get(function() {
-	return `${this.address.street}`.trim()
+	return `${this.address.street} ${this.address.state}`.trim()
 });
 
 bathroomSchema.methods.apiRepr = function() {
@@ -25,7 +22,7 @@ bathroomSchema.methods.apiRepr = function() {
 		city: this.city,
 		name: this.name,
 		address: this.address.street,
-		coord: this.address.coord,
+		state: this.address.state,
 		zipcode: this.zipcode
 	};
 }
