@@ -7,12 +7,13 @@ const should = chai.should();
 
 const {Bathroom} = require('../models');
 const {app, runServer, closeServer} = require('../server');
-const {TEST_DATABASE_URL} = require('../config');
+const {TEST_DATABASE_URL, TEST_PORT} = require('../config');
 
 chai.use(chaiHttp);
 
 function seedBathroomData() {
  console.info('seeding bathroom data');
+ //console.log('BATHROOM DATA', generateBathroomData());
  const seedData = [];
 
  for (let i = 1; i <= 3; i++) {
@@ -39,12 +40,13 @@ function generateBathroomData() {
    name: faker.company.companyName(),
    address: {
      street: faker.address.streetName(),
-     coord: {
-        lat: faker.address.latitude(),
-        lng: faker.address.longitude()
-     },
+     state: faker.address.state()
    },
-   zipcode: faker.address.zipCode()
+  coords: {
+     lat: faker.address.latitude(),
+     lng: faker.address.longitude()
+   },
+   zipcode: faker.address.zipCode(),
  }
 }
 
@@ -55,7 +57,7 @@ function tearDownDb() {
 
 describe('Bathrooms API resource', function() {
   before(function() {
-    return runServer(TEST_DATABASE_URL);
+    return runServer(TEST_DATABASE_URL, TEST_PORT);
   });
 
   beforeEach(function() {
@@ -100,7 +102,7 @@ describe('Bathrooms API resource', function() {
        res.body.should.have.length.of.at.least(1);
 
        res.body.forEach(function(bathroom) {
-         bathroom.should.include.keys('type', 'city', 'name', 'address', 'zipcode');
+         bathroom.should.include.keys('type', 'city', 'name', 'address', 'zipcode', 'coords');
        });
 
        resBathroom = res.body[0];
@@ -114,6 +116,7 @@ describe('Bathrooms API resource', function() {
 
    it('should add a new bathroom location', function() {
      const newBathroom = generateBathroomData();
+     console.log('NEW BATHROOM', newBathroom);
      return chai.request(app)
        .post('/bathrooms')
        .send(newBathroom)
@@ -121,12 +124,15 @@ describe('Bathrooms API resource', function() {
          res.should.have.status(201);
          res.should.be.json;
          res.body.should.be.a('object');
-         res.body.should.include.keys('id', 'type', 'city', 'name', 'address', 'zipcode');
+         res.body.should.include.keys('id', 'type', 'city', 'name', 'address', 'coords', 'zipcode');
          res.body.id.should.not.be.null;
          res.body.type.should.equal(newBathroom.type);
          res.body.city.should.equal(newBathroom.city);
          res.body.name.should.equal(newBathroom.name);
-         res.body.address.should.equal(newBathroom.address.street);
+         res.body.address.street.should.equal(newBathroom.address.street);
+         res.body.address.state.should.equal(newBathroom.address.state);
+         res.body.coords.lat.should.equal(newBathroom.coords.lat);
+         res.body.coords.lng.should.equal(newBathroom.coords.lng);
          res.body.zipcode.should.equal(newBathroom.zipcode);
 
          return Bathroom.findById(res.body.id);
@@ -136,9 +142,16 @@ describe('Bathrooms API resource', function() {
          bathroom.city.should.equal(newBathroom.city);
          bathroom.name.should.equal(newBathroom.name);
          bathroom.address.street.should.equal(newBathroom.address.street);
+         bathroom.address.state.should.equal(newBathroom.address.state);
+         bathroom.coords.lat.should.equal(newBathroom.coords.lat);
+         bathroom.coords.lng.should.equal(newBathroom.coords.lng);
          bathroom.zipcode.should.equal(newBathroom.zipcode);
        });
     });
+
+   /*it('', function() {
+    console.log(generateBathroomData());
+   });*/
   });
 
   describe('PUT endpoint', function() {
@@ -152,7 +165,11 @@ describe('Bathrooms API resource', function() {
         address: {
           street: 'boop'
         },
-        zipcode: 'beep'
+        zipcode: 'beep',
+        coords: {
+          lat: '20.1546161',
+          lng: '90.5464213'
+        }
       };
 
       return Bathroom

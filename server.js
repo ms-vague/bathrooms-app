@@ -47,7 +47,7 @@ app.get('/bathrooms/:id', (req, res) => {
 });
 
 app.post('/bathrooms', (req, res) => {
- const requiredFields = ['type', 'city', 'name', 'address', 'zipcode'];
+ const requiredFields = ['type', 'city', 'name', 'address', 'coords', 'zipcode'];
  const requiredAddressFields = [];
  requiredFields.forEach(field => {
   if (!(field in req.body && req.body[field])) {
@@ -75,7 +75,7 @@ Bathroom
  .then(bathroom => {
     const address = `${bathroom.address.street} ${bathroom.address.state}`; 
     geocoder.geocode(address, function(err, geoRes) {
-      const geoBathroom = Object.assign({}, geoRes, bathroom);
+      const geoBathroom = Object.assign({}, geoRes, bathroom.apiRepr());
       res.status(201).json(geoBathroom);
     })
  })
