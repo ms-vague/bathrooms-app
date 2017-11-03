@@ -11,6 +11,7 @@ let BATHROOMS_URL = '/bathrooms';
 
 function getAndDisplayBathrooms() {
   $.getJSON(BATHROOMS_URL, function(bathrooms) {
+    console.log(bathrooms);
     let bathroomElements = bathrooms.map(function(bathroom) {
       let element = $(bathroomTemplate);
       element.attr('id', bathroom._id);
@@ -73,10 +74,10 @@ const icon = 'http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_purple.pn
 function initMap() {
   $.getJSON(BATHROOMS_URL, function(bathrooms) {
     bathrooms.forEach(function(element) {
+      console.log(element)
       const coords = element.address.coord;
       const names = element.name;
       const type = element.type;
-      console.log(coords);
       addMarkers(coords, names, type);
     });
   }); 

@@ -8,6 +8,10 @@ const bathroomSchema = mongoose.Schema({
 		street: {type: String, required: true},
 		state: {type: String, required: true}
 	},
+	/*coords: {
+		lat: {type: String, required: true},
+		lng: {type: String, required: true}
+	},*/
 	zipcode: {type: String, required: true}
 });
 
@@ -21,12 +25,12 @@ bathroomSchema.methods.apiRepr = function() {
 		type: this.type,
 		city: this.city,
 		name: this.name,
-		address: this.address.street,
-		state: this.address.state,
+		address: this.address,
+		//coords: this.coords,
 		zipcode: this.zipcode
 	};
 }
 
 const Bathroom = mongoose.model('Bathroom', bathroomSchema);
-
+	
 module.exports = {Bathroom};
