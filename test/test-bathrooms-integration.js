@@ -193,6 +193,7 @@ describe('Bathrooms API resource', function() {
           bathroom.city.should.equal(updateData.city);
           bathroom.name.should.equal(updateData.name);
           bathroom.address.street.should.equal(updateData.address.street);
+          bathroom.address.state.should.equal(updateData.address.state);
           bathroom.zipcode.should.equal(updateData.zipcode);
         });
     });

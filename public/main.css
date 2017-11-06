@@ -28,7 +28,8 @@ fieldset {
 	padding: 40px;
 	border-radius: 3px;
 	background: white;
-	margin: 0 auto;
+	margin: 50px auto;
+	margin-bottom: 20px;
 }
 
 .signup-form legend {
@@ -109,7 +110,7 @@ button[type="submit"]:focus {
 footer {
 	text-align: center;
 	color: white;
-	margin: 20px auto;
+	margin: 10px auto;
 	font-weight: 600;
 	border: 0;
 	padding: 0;
@@ -121,6 +122,17 @@ footer {
 
 .footer a:hover {
 	color: #E7F1F9;
+}
+
+.description {
+	display: inline-block;
+	width: 50%;
+	height: 25%;
+	border: 1px solid black;
+	border-radius: 4px;
+	background-color: #CACFD2;
+	margin: 5px auto;
+	margin-left: 25%;
 }
 
 #map {

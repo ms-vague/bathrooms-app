@@ -53,6 +53,7 @@ function handleBathroomAdd() {
       city: $(e.currentTarget).find('.city').val(),
       name: $(e.currentTarget).find('.name').val(),
       street: $(e.currentTarget).find('.street').val(),
+      state: $(e.currentTarget).find('.state').val(),
       zipcode: $(e.currentTarget).find('.zipcode').val()
     })
     window.location.href = 'results.html';
