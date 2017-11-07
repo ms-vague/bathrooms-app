@@ -101,7 +101,7 @@ function addMarkers(coords, names, type) {
   });
 
   marker.addListener('mouseover', function() {
-    infoWindow.open(map, marker);
+    infoWindow.open(map, marker)
   });
   marker.addListener('mouseout', function() {
     infoWindow.close();
