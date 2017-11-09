@@ -154,3 +154,13 @@ html, body {
   padding: 50px;
 }
 
+/* 
+Responsive Design CSS Below
+*/
+
+@media screen and (max-width: 300px) {
+	h1 {
+		padding: 3em 0;
+	}
+}
+
