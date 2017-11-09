@@ -84,13 +84,6 @@ geocoder.geocode(reqBodyAddress, function(error, geoRes) {
       }
     })
   })
-  .then(bathroom => {
-    console.log('All Good!')
-  })
-  .catch(err => {
-    console.error(err);
-    res.status(500).json({error: 'Internal Server Error'})
-  });
 })
 /*
 const createdBathroom = Bathroom
