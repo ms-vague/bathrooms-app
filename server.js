@@ -61,41 +61,71 @@ app.post('/bathrooms', (req, res) => {
   }
 });
 
-Bathroom
+const reqBodyAddress = `${req.body.address.street} ${req.body.address.state}`;
+
+geocoder.geocode(reqBodyAddress, function(error, geoRes) {
+  const [first] = geoRes;
+  const {latitude, longitude} = first;
+
+  Bathroom
+  .create(first, req, function() {
+    res.status(201).json({
+      type: req.body.type,
+      city: req.body.city,
+      name: req.body.name,
+      address: {
+        street: req.body.address.street,
+        state: req.body.address.state
+      },
+      zipcode: req.body.zipcode,
+      coordinates: {
+        latitude: latitude,
+        longitude: longitude
+      }
+    })
+  })
+  .then(bathroom => {
+    console.log('All Good!')
+  })
+  .catch(err => {
+    console.error(err);
+    res.status(500).json({error: 'Internal Server Error'})
+  });
+})
+/*
+const createdBathroom = Bathroom
  .create({
   type: req.body.type,
   city: req.body.city,
   name: req.body.name,
   address: {
-    street: req.body.street,
-    state: req.body.state
+    street: req.body.address.street,
+    state: req.body.address.state
   },
-  /*coords: {
-    lat: req.body.coords.lat,
-    lng: req.body.coords.lng
-  },*/
   zipcode: req.body.zipcode
 })
- .then(bathroom => {
-    const address = `${bathroom.address.street} ${bathroom.address.state}`; 
+ .then(createdBathroom => {
+    console.log(createdBathroom.zipcode);
+    const address = `${createdBathroom.address.street} ${createdBathroom.address.state}`; 
     geocoder.geocode(address, function(err, geoRes) {
       // ES6 Array destructuring //
-      console.log('GEO', geoRes);
-      const [first] = geoRes;
-      console.log('FIRST', first);
+      //console.log('GEO', geoRes);
+      const geoObj = geoRes[0];
+      console.log(geoObj);
+      //console.log('FIRST', first);
       // Es6 Object.assign //
-      const geoBathroom = Object.assign({}, first, bathroom.apiRepr());
+      //const geoBathroom = Object.assign({}, first, bathroom.apiRepr());
       //const latitude = geoBathroom.latitude;
-      const {latitude, longitude} = geoBathroom;
-      console.log(latitude);
-      console.log(longitude);
-      res.status(201).json(geoBathroom);
+      //const {latitude, longitude} = geoBathroom;
+      //console.log(latitude);
+      //console.log(longitude);
+      //res.status(201).json(geoObj);
     })
- })
+ }) 
  .catch(err => {
     console.error(err);
     res.status(500).json({error: 'Internal server error'});
- });
+ });*/
 });
 
 app.put('/bathrooms/:id', (req, res) => {
