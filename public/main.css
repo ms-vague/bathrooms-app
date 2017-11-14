@@ -139,9 +139,29 @@ footer {
 }
 
 #map {
-  height: 400px;
-  width: 600px;
+  height: 300px;
+  width: 500px;
   margin: auto;
+}
+
+.map {	
+	margin-right: 30%;
+	margin-top: 5%;
+	clear: right;
+}
+
+.locations {
+	float: left;
+}
+
+.list-info {
+	position: relative;
+	float: right;
+	list-style: none;
+	width: 250px;
+	height: 200px;
+	margin: 5px 5px 5px 5px;
+	border: 2px solid black;
 }
 
 html, body {
@@ -159,7 +179,7 @@ Responsive Design CSS Below
 */
 
 @media screen and (max-width: 300px) {
-	.description, .signup-form, .footer  {
+	.description, .signup-form, .footer, .locations, .location-info  {
 		padding: 3em 0;
 	}
 }
