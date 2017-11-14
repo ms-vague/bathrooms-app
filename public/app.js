@@ -4,14 +4,13 @@ let bathroomTemplate = (
       "<button class='delete-location'>" +
       "<span class='button-label'>Delete</span>" +
       "</button>" +
-    "</il>"
+    "</li>"
 );
 
 let BATHROOMS_URL = '/bathrooms';
 
 function getAndDisplayBathrooms() {
   $.getJSON(BATHROOMS_URL, function(bathrooms) {
-    console.log(bathrooms);
     let bathroomElements = bathrooms.map(function(bathroom) {
       let element = $(bathroomTemplate);
       element.attr('id', bathroom._id);
@@ -19,7 +18,7 @@ function getAndDisplayBathrooms() {
       bathroomName.text(bathroom.name);
       return element;
     });
-    $('.locations').html(bathroomElements);
+    $('.each-location').html(bathroomElements);
   });
 }
 
@@ -45,6 +44,9 @@ function deleteBathroomLocation(bathroomId) {
   });
 }
 
+// Ask Ben about lines 57 and 58. Not working for input.html 
+// Is it because it's inside an object?
+
 function handleBathroomAdd() {
   $('.add-bathroom-form').submit(function(e) {
     e.preventDefault();
@@ -61,7 +63,7 @@ function handleBathroomAdd() {
 }
 
 function handleBathroomDelete() {
-  $('.locations').on('click', '.delete-location', function(e) {
+  $('.each-location').on('click', '.delete-location', function(e) {
     e.preventDefault();
     deleteBathroomLocation($(e.currentTarget).closest('.new-location').attr('id'));
   });
@@ -75,11 +77,14 @@ const icon = 'http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_purple.pn
 function initMap() {
   $.getJSON(BATHROOMS_URL, function(bathrooms) {
     bathrooms.forEach(function(element) {
-      console.log(element)
+      //console.log(element)
       const coords = element.address.coord;
       const names = element.name;
       const type = element.type;
+      const city = element.city;
+      const street = element.address.street;
       addMarkers(coords, names, type);
+      displayLocationInfo(city, names, type, street);
     });
   }); 
     const newOrleans = { lng: -90.0715, lat: 29.9511 };
@@ -106,6 +111,22 @@ function addMarkers(coords, names, type) {
   marker.addListener('mouseout', function() {
     infoWindow.close();
   });
+}
+
+let displayTemplate = ( 
+    "<li class='list-info'>" +
+      "<p><span class='bathroom-location-city'>City: </span></p>" +
+      "<p><span class='bathroom-location-name'>Name: </span></p>" +
+      "<p><span class='bathroom-location-type'>Type: </span></p>" +
+      "<p><span class='bathroom-location-street'>Street: </span></p>" +
+    "</li>"
+);
+
+function displayLocationInfo(city, name, type, street) {
+  $(".display-info")
+    .append(displayTemplate)
+    .find(".bathroom-location-city")
+    .after(city)
 }
 
 $(function() {
