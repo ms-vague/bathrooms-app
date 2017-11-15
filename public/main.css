@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+.input {
+	margin: auto;
+}
+
 body {
 	background: #B2BABB;
 	font-family: sans-serif;
@@ -154,6 +158,10 @@ footer {
 	float: left;
 }
 
+.each-location {
+	list-style: none;
+}
+
 .list-info {
 	position: relative;
 	float: right;
@@ -162,6 +170,11 @@ footer {
 	height: 200px;
 	margin: 5px 5px 5px 5px;
 	border: 2px solid black;
+}
+
+.list-info.enlarge {
+	width: 450px;
+	height: 200px;
 }
 
 html, body {
@@ -179,8 +192,12 @@ Responsive Design CSS Below
 */
 
 @media screen and (max-width: 300px) {
-	.description, .signup-form, .footer, .locations, .location-info  {
+	.description, .signup-form, .footer, .locations, .list-info  {
 		padding: 3em 0;
+	}
+
+	.list-info {
+		min-width: 25%;
 	}
 }
 

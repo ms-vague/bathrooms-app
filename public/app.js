@@ -1,5 +1,5 @@
 let bathroomTemplate = (
-    "<il class='new-location'>" +
+    "<li class='new-location'>" +
       "<p><span class='bathroom-location-name'></span></p>" +
       "<button class='delete-location'>" +
       "<span class='button-label'>Delete</span>" +
@@ -44,9 +44,6 @@ function deleteBathroomLocation(bathroomId) {
   });
 }
 
-// Ask Ben about lines 57 and 58. Not working for input.html 
-// Is it because it's inside an object?
-
 function handleBathroomAdd() {
   $('.add-bathroom-form').submit(function(e) {
     e.preventDefault();
@@ -77,8 +74,7 @@ const icon = 'http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_purple.pn
 function initMap() {
   $.getJSON(BATHROOMS_URL, function(bathrooms) {
     bathrooms.forEach(function(element) {
-      //console.log(element)
-      const coords = element.address.coord;
+      const coords = element.coordinates;
       const names = element.name;
       const type = element.type;
       const city = element.city;
@@ -95,6 +91,7 @@ function initMap() {
 }
 
 function addMarkers(coords, names, type) {
+  console.log('94', coords)
   const infoWindow = new google.maps.InfoWindow({
   content: `${names}'s bathroom is ${type}.`
   });
@@ -122,6 +119,8 @@ let displayTemplate = (
     "</li>"
 );
 
+// function below is a work in progress //
+
 function displayLocationInfo(city, name, type, street) {
   $(".display-info")
     .append(displayTemplate)
@@ -129,8 +128,26 @@ function displayLocationInfo(city, name, type, street) {
     .after(city)
 }
 
+function enlargeDisplayBox() {
+  $(".display-info").on("mouseenter", ".list-info", function(e) {
+    $(e.currentTarget).closest(".list-info").animate({
+      width: "350px",
+      height: "300px",
+      borderWidth: "8px"
+    }, 1000);
+  });
+  $(".display-info").on("mouseleave", ".list-info", function(e) {
+    $(e.currentTarget).closest(".list-info").animate({
+      width: "250px",
+      height: "200px",
+      borderWidth: "2px"
+    }, "slow");
+  });
+}
+
 $(function() {
   getAndDisplayBathrooms();
   handleBathroomAdd();
   handleBathroomDelete();
+  enlargeDisplayBox();
 });
