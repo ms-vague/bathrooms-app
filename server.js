@@ -24,7 +24,7 @@ const geocoder = NodeGeocoder(options);
 app.get('/bathrooms', (req, res) => {
  Bathroom
  .find()
- .exec() //query builder interface
+ .exec()
  .then(bathrooms => {
   res.json(bathrooms);
  })
@@ -61,66 +61,32 @@ app.post('/bathrooms', (req, res) => {
   }
 });
 
-const reqBodyAddress = `${req.body.address.street} ${req.body.address.state}`;
+const reqBodyAddress = `${req.body.street} ${req.body.state}`;
 
 geocoder.geocode(reqBodyAddress, function(error, geoRes) {
   const [first] = geoRes;
-  const {latitude, longitude} = first;
 
-  Bathroom
-  .create(first, req, function() {
-    res.status(201).json({
+  Bathroom.create({
       type: req.body.type,
       city: req.body.city,
       name: req.body.name,
       address: {
-        street: req.body.address.street,
-        state: req.body.address.state
+        street: req.body.street,
+        state: req.body.state
       },
       zipcode: req.body.zipcode,
       coordinates: {
-        latitude: latitude,
-        longitude: longitude
+        lat: first.latitude,
+        lng: first.longitude
       }
     })
-  })
-})
-/*
-const createdBathroom = Bathroom
- .create({
-  type: req.body.type,
-  city: req.body.city,
-  name: req.body.name,
-  address: {
-    street: req.body.address.street,
-    state: req.body.address.state
-  },
-  zipcode: req.body.zipcode
-})
- .then(createdBathroom => {
-    console.log(createdBathroom.zipcode);
-    const address = `${createdBathroom.address.street} ${createdBathroom.address.state}`; 
-    geocoder.geocode(address, function(err, geoRes) {
-      // ES6 Array destructuring //
-      //console.log('GEO', geoRes);
-      const geoObj = geoRes[0];
-      console.log(geoObj);
-      //console.log('FIRST', first);
-      // Es6 Object.assign //
-      //const geoBathroom = Object.assign({}, first, bathroom.apiRepr());
-      //const latitude = geoBathroom.latitude;
-      //const {latitude, longitude} = geoBathroom;
-      //console.log(latitude);
-      //console.log(longitude);
-      //res.status(201).json(geoObj);
-    })
- }) 
- .catch(err => {
-    console.error(err);
-    res.status(500).json({error: 'Internal server error'});
- });*/
+    .then(newBathroom => {
+      res.status(201).json(newBathroom);
+    });
+  });
 });
 
+// IDs don't match on Update //
 app.put('/bathrooms/:id', (req, res) => {
  if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
   const message = (
