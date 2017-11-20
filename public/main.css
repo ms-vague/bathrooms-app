@@ -146,19 +146,21 @@ footer {
   height: 300px;
   width: 500px;
   margin: auto;
+  border: 1px solid black;
 }
 
-.map {	
+/* .map {	
 	margin-right: 30%;
 	margin-top: 5%;
 	clear: right;
-}
+} */
 
 .location-container {
 	position: relative;
 	float: right;
 	width: 250px;
 	height: 200px;
+	background-color: #79869D;
 	margin: 5px 5px 5px 5px;
 	border: 2px solid black;
 }
@@ -182,7 +184,7 @@ html, body {
   padding: 50px;
 }
 
-.delete-label {
+.delete-location {
 	background-color: #717D83;
 	border: none;
 	color: #000000;
@@ -191,10 +193,27 @@ html, body {
 	text-decoration: none;
 	display: inline-block;
 	font-size: 16px;
-	margin: 4px 2px;
+	margin: 2px 2px 2px 2px;
 	position: absolute;
 	top: 0;
 	right: 0;
+	border-radius: 10%;
+}
+
+.delete-location:focus {
+	outline: 0;
+}
+
+.input-return {
+	text-align: center;
+	margin-top: 6px;
+	margin-bottom: 6px;
+}
+
+.input-return a {
+	text-decoration: none;
+	font-weight: bold;
+	color: #000000;
 }
 
 /* 

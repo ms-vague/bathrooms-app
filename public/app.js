@@ -67,9 +67,9 @@ function handleBathroomAdd() {
 }
 
 function handleBathroomDelete() {
-  $('.display-info').on('click', '.delete-location', function(e) {
+  $('.location-info').on('click', '.button-label', function(e) {
     e.preventDefault();
-    deleteBathroomLocation($(e.currentTarget).closest('.delete-location').attr('id'));
+    deleteBathroomLocation($(e.currentTarget).closest('.location-container').attr('id'));
   });
 }
 
