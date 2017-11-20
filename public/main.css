@@ -192,12 +192,12 @@ html, body {
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
-	font-size: 16px;
+	font-size: 12px;
 	margin: 2px 2px 2px 2px;
 	position: absolute;
 	top: 0;
 	right: 0;
-	border-radius: 10%;
+	border-radius: 75px;
 }
 
 .delete-location:focus {
