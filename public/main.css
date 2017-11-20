@@ -154,27 +154,22 @@ footer {
 	clear: right;
 }
 
-.locations {
-	float: left;
-}
-
-.each-location {
-	list-style: none;
-}
-
-.list-info {
+.location-container {
 	position: relative;
 	float: right;
-	list-style: none;
 	width: 250px;
 	height: 200px;
 	margin: 5px 5px 5px 5px;
 	border: 2px solid black;
 }
 
-.list-info.enlarge {
+.location-container.enlarge {
 	width: 450px;
 	height: 200px;
+}
+
+.list-info {
+	list-style: none;
 }
 
 html, body {
@@ -187,16 +182,31 @@ html, body {
   padding: 50px;
 }
 
+.delete-label {
+	background-color: #717D83;
+	border: none;
+	color: #000000;
+	padding: 6px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 4px 2px;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
 /* 
 Responsive Design CSS Below
 */
 
 @media screen and (max-width: 300px) {
-	.description, .signup-form, .footer, .locations, .list-info  {
+	.description, .signup-form, .footer, .location-container  {
 		padding: 3em 0;
 	}
 
-	.list-info {
+	.location-container {
 		min-width: 25%;
 	}
 }

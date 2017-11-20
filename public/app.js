@@ -1,10 +1,17 @@
-let bathroomTemplate = (
-    "<li class='new-location'>" +
-      "<p><span class='bathroom-location-name'></span></p>" +
+let bathroomTemplate = ( 
+    "<div class='location-container'>" +
       "<button class='delete-location'>" +
-      "<span class='button-label'>Delete</span>" +
+        "<span class='button-label'>x</span>" +
       "</button>" +
-    "</li>"
+      "<ul class='display-info'>" +
+        "<li class='list-info'>" +
+          "<p><span class='bathroom-location-city'>City: </span></p>" +
+          "<p><span class='bathroom-location-name'>Name: </span></p>" +
+          "<p><span class='bathroom-location-type'>Type: </span></p>" +
+          "<p><span class='bathroom-location-street'>Street: </span></p>" +
+        "</li>" +
+      "</ul>" +
+    "</div>"
 );
 
 let BATHROOMS_URL = '/bathrooms';
@@ -18,7 +25,7 @@ function getAndDisplayBathrooms() {
       bathroomName.text(bathroom.name);
       return element;
     });
-    $('.each-location').html(bathroomElements);
+    $('.location-info').html(bathroomElements);
   });
 }
 
@@ -60,9 +67,9 @@ function handleBathroomAdd() {
 }
 
 function handleBathroomDelete() {
-  $('.each-location').on('click', '.delete-location', function(e) {
+  $('.display-info').on('click', '.delete-location', function(e) {
     e.preventDefault();
-    deleteBathroomLocation($(e.currentTarget).closest('.new-location').attr('id'));
+    deleteBathroomLocation($(e.currentTarget).closest('.delete-location').attr('id'));
   });
 }
 
@@ -80,7 +87,7 @@ function initMap() {
       const city = element.city;
       const street = element.address.street;
       addMarkers(coords, names, type);
-      displayLocationInfo(city, names, type, street);
+      displayLocationInfo(city, name, type, street);
     });
   }); 
     const newOrleans = { lng: -90.0715, lat: 29.9511 };
@@ -91,7 +98,6 @@ function initMap() {
 }
 
 function addMarkers(coords, names, type) {
-  console.log('94', coords)
   const infoWindow = new google.maps.InfoWindow({
   content: `${names}'s bathroom is ${type}.`
   });
@@ -110,39 +116,28 @@ function addMarkers(coords, names, type) {
   });
 }
 
-let displayTemplate = ( 
-    "<li class='list-info'>" +
-      "<p><span class='bathroom-location-city'>City: </span></p>" +
-      "<p><span class='bathroom-location-name'>Name: </span></p>" +
-      "<p><span class='bathroom-location-type'>Type: </span></p>" +
-      "<p><span class='bathroom-location-street'>Street: </span></p>" +
-    "</li>"
-);
-
 // function below is a work in progress //
 
 function displayLocationInfo(city, name, type, street) {
-  $(".display-info")
-    .append(displayTemplate)
-    .find(".bathroom-location-city")
-    .after(city)
+  $(".location-info")
+    .append(bathroomTemplate);
 }
 
 function enlargeDisplayBox() {
-  $(".display-info").on("mouseenter", ".list-info", function(e) {
-    $(e.currentTarget).closest(".list-info").animate({
+  /*$(".location-info").on("mouseenter", ".location-container", function(e) {
+    $(e.currentTarget).closest(".location-container").animate({
       width: "350px",
       height: "300px",
       borderWidth: "8px"
     }, 1000);
   });
-  $(".display-info").on("mouseleave", ".list-info", function(e) {
-    $(e.currentTarget).closest(".list-info").animate({
+  $(".location-info").on("mouseleave", ".location-container", function(e) {
+    $(e.currentTarget).closest(".location-container").animate({
       width: "250px",
       height: "200px",
       borderWidth: "2px"
-    }, "slow");
-  });
+    }, 1500);
+  }); */
 }
 
 $(function() {
