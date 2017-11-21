@@ -7,7 +7,10 @@
 }
 
 body {
-	background: #B2BABB;
+	background: #FEAC5E;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to left, #4BC0C8, #C779D0, #FEAC5E);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to left, #4BC0C8, #C779D0, #FEAC5E); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 	font-family: sans-serif;
 	padding: 60px 0 0;
 	margin: 0;
@@ -149,18 +152,12 @@ footer {
   border: 1px solid black;
 }
 
-/* .map {	
-	margin-right: 30%;
-	margin-top: 5%;
-	clear: right;
-} */
-
 .location-container {
 	position: relative;
 	float: right;
 	width: 250px;
 	height: 200px;
-	background-color: #79869D;
+	background-color: #D6DCEE;
 	margin: 5px 5px 5px 5px;
 	border: 2px solid black;
 }
@@ -168,6 +165,10 @@ footer {
 .location-container.enlarge {
 	width: 450px;
 	height: 200px;
+}
+
+.display-info {
+	padding: 2px;
 }
 
 .list-info {
@@ -185,23 +186,24 @@ html, body {
 }
 
 .delete-location {
-	background-color: #717D83;
+	background-color: #D6DCEE;
 	border: none;
 	color: #000000;
 	padding: 6px;
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
-	font-size: 12px;
+	font-size: 14px;
 	margin: 2px 2px 2px 2px;
 	position: absolute;
 	top: 0;
 	right: 0;
 	border-radius: 75px;
+	outline: 0;
 }
 
-.delete-location:focus {
-	outline: 0;
+.delete-location:hover {
+	background-color: #79989D;
 }
 
 .input-return {
@@ -216,6 +218,10 @@ html, body {
 	color: #000000;
 }
 
+.button-add-more {
+	background-color: #79869D;
+}
+
 /* 
 Responsive Design CSS Below
 */
@@ -226,7 +232,7 @@ Responsive Design CSS Below
 	}
 
 	.location-container {
-		min-width: 25%;
+		min-width: 50%;
 	}
 }
 
