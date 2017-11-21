@@ -42,12 +42,8 @@ function generateBathroomData() {
      street: faker.address.streetName(),
      state: faker.address.state()
    },
-  /*coords: {
-     lat: faker.address.latitude(),
-     lng: faker.address.longitude()
-   },*/
-   zipcode: faker.address.zipCode(),
- }
+   zipcode: faker.address.zipCode()
+  }
 }
 
 function tearDownDb() {
@@ -99,8 +95,6 @@ describe('Bathrooms API resource', function() {
        res.should.have.status(200);
        res.should.be.json;
        res.body.should.be.a('array');
-       res.body.should.have.length.of.at.least(1);
-
        res.body.forEach(function(bathroom) {
          bathroom.should.include.keys('type', 'city', 'name', 'address', 'zipcode');
        });
@@ -116,7 +110,6 @@ describe('Bathrooms API resource', function() {
 
    it('should add a new bathroom location', function() {
      const newBathroom = generateBathroomData();
-     console.log('NEW BATHROOM', newBathroom);
      return chai.request(app)
        .post('/bathrooms')
        .send(newBathroom)
@@ -124,6 +117,7 @@ describe('Bathrooms API resource', function() {
          res.should.have.status(201);
          res.should.be.json;
          res.body.should.be.a('object');
+         console.log('RES BODY', res.body)
          res.body.should.include.keys('id', 'type', 'city', 'name', 'address', 'zipcode');
          res.body.id.should.not.be.null;
          res.body.type.should.equal(newBathroom.type);
@@ -131,8 +125,6 @@ describe('Bathrooms API resource', function() {
          res.body.name.should.equal(newBathroom.name);
          res.body.address.street.should.equal(newBathroom.address.street);
          res.body.address.state.should.equal(newBathroom.address.state);
-         //res.body.coords.lat.should.equal(newBathroom.coords.lat);
-         //res.body.coords.lng.should.equal(newBathroom.coords.lng);
          res.body.zipcode.should.equal(newBathroom.zipcode);
 
          return Bathroom.findById(res.body.id);
@@ -143,15 +135,9 @@ describe('Bathrooms API resource', function() {
          bathroom.name.should.equal(newBathroom.name);
          bathroom.address.street.should.equal(newBathroom.address.street);
          bathroom.address.state.should.equal(newBathroom.address.state);
-         //bathroom.coords.lat.should.equal(newBathroom.coords.lat);
-         //bathroom.coords.lng.should.equal(newBathroom.coords.lng);
          bathroom.zipcode.should.equal(newBathroom.zipcode);
        });
     });
-
-   /*it('', function() {
-    console.log(generateBathroomData());
-   });*/
   });
 
   describe('PUT endpoint', function() {
@@ -167,10 +153,6 @@ describe('Bathrooms API resource', function() {
           state: 'bloop'
         },
         zipcode: 'beep'
-        /*coords: {
-          lat: '20.1546161',
-          lng: '90.5464213'
-        }*/
       };
 
       return Bathroom
