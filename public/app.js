@@ -21,8 +21,15 @@ function getAndDisplayBathrooms() {
     let bathroomElements = bathrooms.map(function(bathroom) {
       let element = $(bathroomTemplate);
       element.attr('id', bathroom._id);
+      console.log(bathroom);
       let bathroomName = element.find('.bathroom-location-name');
-      bathroomName.text(bathroom.name);
+      bathroomName.after(bathroom.name);
+      let bathroomCity = element.find('.bathroom-location-city');
+      bathroomCity.after(bathroom.city);
+      let bathroomType = element.find('.bathroom-location-type');
+      bathroomType.after(bathroom.type);
+      let bathroomStreet = element.find('.bathroom-location-street');
+      bathroomStreet.after(bathroom.address.street);
       return element;
     });
     $('.location-info').html(bathroomElements);
@@ -43,7 +50,6 @@ function addBathroomLocation(bathroom) {
 }
 
 function deleteBathroomLocation(bathroomId) {
-  //console.log('Deleting bathroom location `' + bathroomId + '`');
   $.ajax({
     url: BATHROOMS_URL + '/' + bathroomId,
     method: 'DELETE',

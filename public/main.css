@@ -8,10 +8,12 @@
 
 body {
 	background: #FEAC5E;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to left, #4BC0C8, #C779D0, #FEAC5E);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to left, #4BC0C8, #C779D0, #FEAC5E); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-	font-family: sans-serif;
+    background: -webkit-linear-gradient(right, #4BC0C8, #C779D0, #FEAC5E);
+    background: -o-linear-gradient(right, #4BC0C8, #C779D0, #FEAC5E);
+    background: linear-gradient(to left, #4BC0C8, #C779D0, #FEAC5E);  
+/* Chrome 10-25, Safari 5.1-6 */ /* W3C, IE 10+/ Edge, Firefox 16+, 
+Chrome 26+, Opera 12+, Safari 7+ */
+	font-family: Roboto;
 	padding: 60px 0 0;
 	margin: 0;
 	font-size: 18px;
@@ -203,7 +205,7 @@ html, body {
 }
 
 .delete-location:hover {
-	background-color: #79989D;
+	background-color: #AEB1BB;
 }
 
 .input-return {
