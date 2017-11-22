@@ -13,10 +13,10 @@ body {
     background: linear-gradient(to left, #4BC0C8, #C779D0, #FEAC5E);  
 /* Chrome 10-25, Safari 5.1-6 */ /* W3C, IE 10+/ Edge, Firefox 16+, 
 Chrome 26+, Opera 12+, Safari 7+ */
-	font-family: Roboto;
 	padding: 60px 0 0;
 	margin: 0;
 	font-size: 18px;
+	font-family: Roboto, Sans-Serif; 
 }
 
 fieldset {
@@ -95,7 +95,7 @@ input[type="submit"]: focus {
 
 button[type="submit"]:hover,
 button[type="submit"]:focus {
-	background-color: #90CAF9;
+	background-color: #D6DCEE;
 	-webkit-transition: background 0.1s;
 	-moz-transition: background 0.1s;
 	-o-transition: background 0.1s;
@@ -142,7 +142,7 @@ footer {
 	height: 25%;
 	border: 1px solid black;
 	border-radius: 4px;
-	background-color: #D7CCC8;
+	background-color: #AEB1BB;
 	margin: 5px auto;
 	margin-left: 25%;
 }
@@ -221,7 +221,7 @@ html, body {
 }
 
 .button-add-more {
-	background-color: #79869D;
+	background-color: #AEB1BB;
 }
 
 /* 

@@ -21,7 +21,6 @@ function getAndDisplayBathrooms() {
     let bathroomElements = bathrooms.map(function(bathroom) {
       let element = $(bathroomTemplate);
       element.attr('id', bathroom._id);
-      console.log(bathroom);
       let bathroomName = element.find('.bathroom-location-name');
       bathroomName.after(bathroom.name);
       let bathroomCity = element.find('.bathroom-location-city');
@@ -68,6 +67,7 @@ function handleBathroomAdd() {
       state: $(e.currentTarget).find('.state').val(),
       zipcode: $(e.currentTarget).find('.zipcode').val()
     })
+    window.location.reload(true);
     window.location.href = 'results.html';
   });
 }
@@ -126,7 +126,7 @@ function addMarkers(coords, names, type) {
 
 function displayLocationInfo(city, name, type, street) {
   $(".location-info")
-    .append(bathroomTemplate);
+    .append($.hasData(bathroomTemplate));
 }
 
 function enlargeDisplayBox() {
