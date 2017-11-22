@@ -67,8 +67,7 @@ function handleBathroomAdd() {
       state: $(e.currentTarget).find('.state').val(),
       zipcode: $(e.currentTarget).find('.zipcode').val()
     })
-    window.location.reload(true);
-    window.location.href = 'results.html';
+    window.location.replace('results.html');
   });
 }
 
@@ -122,7 +121,7 @@ function addMarkers(coords, names, type) {
   });
 }
 
-// function below is a work in progress //
+// display location info in unique container //
 
 function displayLocationInfo(city, name, type, street) {
   $(".location-info")
@@ -150,5 +149,5 @@ $(function() {
   getAndDisplayBathrooms();
   handleBathroomAdd();
   handleBathroomDelete();
-  enlargeDisplayBox();
+  //enlargeDisplayBox();
 });
