@@ -92,7 +92,6 @@ function initMap() {
       const city = element.city;
       const street = element.address.street;
       addMarkers(coords, names, type);
-      displayLocationInfo(city, name, type, street);
     });
   }); 
     const newOrleans = { lng: -90.0715, lat: 29.9511 };
@@ -123,31 +122,14 @@ function addMarkers(coords, names, type) {
 
 // display location info in unique container //
 
-function displayLocationInfo(city, name, type, street) {
+function displayLocationInfo(bathroomTemplate) {
   $(".location-info")
-    .append($.hasData(bathroomTemplate));
-}
-
-function enlargeDisplayBox() {
-  /*$(".location-info").on("mouseenter", ".location-container", function(e) {
-    $(e.currentTarget).closest(".location-container").animate({
-      width: "350px",
-      height: "300px",
-      borderWidth: "8px"
-    }, 1000);
-  });
-  $(".location-info").on("mouseleave", ".location-container", function(e) {
-    $(e.currentTarget).closest(".location-container").animate({
-      width: "250px",
-      height: "200px",
-      borderWidth: "2px"
-    }, 1500);
-  }); */
+    .append(bathroomTemplate);
 }
 
 $(function() {
   getAndDisplayBathrooms();
   handleBathroomAdd();
   handleBathroomDelete();
-  //enlargeDisplayBox();
+  displayLocationInfo();
 });
