@@ -1,7 +1,13 @@
+'use strict';
+require('dotenv').config();
 const bodyParser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
 const NodeGeocoder = require('node-geocoder');
+const passport = require('passport');
+
+const {router: usersRouter} = require('./users');
+const {router: authRouter, localStrategy, jwtStrategy} = require('./auth');
 
 mongoose.Promise = global.Promise;
 
@@ -20,6 +26,30 @@ const options = {
 };
 
 const geocoder = NodeGeocoder(options);
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+  if (req.method === 'OPTIONS') {
+      return res.send(204);
+  }
+  next();
+});
+
+passport.use(localStrategy);
+passport.use(jwtStrategy);
+
+app.use('/api/users/', usersRouter);
+app.use('/api/auth/', authRouter);
+
+const jwtAuth = passport.authenticate('jwt', {session: false});
+
+app.get('/api/protected', jwtAuth, (req, res) => {
+  return res.json({
+    data: 'there you are'
+  });
+});
 
 app.get('/bathrooms', (req, res) => {
  Bathroom
@@ -119,7 +149,7 @@ app.delete('/bathrooms/:id', (req, res) => {
   .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 
-app.use('*', function(req, res) {
+app.use('*', (req, res) => {
   res.status(404).json({message: 'Not Found'});
 });
 
