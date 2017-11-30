@@ -52,6 +52,8 @@ fieldset {
 	margin: 0 auto 45px;
 }
 
+input[type="firstName"],
+input[type="lastName"],
 input[type="email"],
 input[type="password"],
 input[type="submit"] {
@@ -84,6 +86,8 @@ button[type="submit"] {
 }
 
 /* Firefox focus fix */
+input[type="firstName"]: focus,
+input[type="lastName"]: focus,
 input[type="email"]: focus,
 input[type="password"]: focus,
 input[type="submit"]: focus {
