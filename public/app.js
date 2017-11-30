@@ -1,3 +1,5 @@
+'use strict';
+
 let bathroomTemplate = ( 
     "<div class='location-container'>" +
       "<button class='delete-location'>" +
