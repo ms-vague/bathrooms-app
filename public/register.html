@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Safe Bathrooms App</title>
+	<meta name="description" content="Where to find safe, gender neutral bathrooms in New Orleans.">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
+	<link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+	<section class="signup">
+		<h1 alt="description-of-app" class="description">Description goes here...</h1>
+
+		<form role="form" action="/register" accept-charset="UTF-8" method="post" class="register-form">
+			<fieldset>
+				<legend>Sign Up</legend>
+				<label for="user-first-name">First Name</label>
+				<input type="firstName" placeholder="First Name" name="user-first-name" id="user-first-name" required/>
+				<label for="user-last-name">Last Name</label>
+				<input type="lastName" placeholder="Last Name" name="user-last-name" id="user-last-name" required/>
+				<label for="user-email">Email</label>
+				<input type="email" placeholder="name@email.com" name="user-email" id="user-email" required/>
+				<label for="user-password">Password</label>
+				<input placeholder="1289numericalPassword" type="password" name="user-password" id="user-password" required/>
+				<button type="submit">Sign Up</button>
+			</fieldset>
+		</form>
+	</section>
+
+	<footer role="contentInfo" class="footer">
+		<p>Already have an account? <a href="/login.html">Log In</a></p>
+	</footer>
+
+</body>
+</html>
