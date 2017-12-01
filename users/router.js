@@ -110,7 +110,7 @@ router.post('/', jsonParser, (req, res) => {
     .then(user => {
       // Ask Ben about this in next session
       // Not using apiRepr(). Just sending user
-      return res.status(201).json(user);
+      return res.status(201).json(user.apiRepr());
     })
     .catch(err => {
       if (err.reason === 'Validation error') {
