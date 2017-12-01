@@ -17,6 +17,7 @@ let bathroomTemplate = (
 );
 
 let BATHROOMS_URL = '/bathrooms';
+let USERS_URL = '/api/users';
 
 function getAndDisplayBathrooms() {
   $.getJSON(BATHROOMS_URL, function(bathrooms) {
@@ -129,9 +130,36 @@ function displayLocationInfo(bathroomTemplate) {
     .append(bathroomTemplate);
 }
 
+// validate users //
+function addUser(user) {
+  $.ajax({
+    method: 'POST',
+    url: USERS_URL,
+    data: JSON.stringify(user),
+    success: function(data) {
+      console.log('Success!');
+    },
+    dataType: 'json',
+    contentType: 'application/json'
+  });
+}
+
+function addUsersToDatabase() {
+  $(".register-form").submit(function(e) {
+    e.preventDefault();
+    addUser({
+      firstName: $(e.currentTarget).find(".user-first-name").val(),
+      lastName: $(e.currentTarget).find(".user-last-name").val(),
+      username: $(e.currentTarget).find(".user-user-name").val(),
+      password: $(e.currentTarget).find(".user-password").val(),
+    })
+  });
+}
+
 $(function() {
   getAndDisplayBathrooms();
   handleBathroomAdd();
   handleBathroomDelete();
   displayLocationInfo();
+  addUsersToDatabase();
 });
