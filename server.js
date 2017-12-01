@@ -13,6 +13,7 @@ mongoose.Promise = global.Promise;
 
 const {PORT, DATABASE_URL} = require('./config');
 const {Bathroom} = require('./models');
+const {User} = require('./users/models');
 
 const app = express();
 app.use(bodyParser.json());
