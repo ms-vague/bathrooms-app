@@ -32,7 +32,7 @@ fieldset {
 	margin: 0 auto 30px;
 }
 
-.signup-form {
+.register-form {
 	width: 400px;
 	padding: 30px;
 	border-radius: 3px;
@@ -41,7 +41,7 @@ fieldset {
 	margin-bottom: 20px;
 }
 
-.signup-form legend {
+.register-form legend {
 	width: 100%;
 	line-height: 38px;
 	font-size: 35px;
@@ -105,20 +105,20 @@ button[type="submit"]:focus {
 	-o-transition: background 0.1s;
 }
 
-.signup-form p {
+.register-form p {
 	font-size: 16px;
 	text-align: center;
 	margin: 10px 0 0;
 	color: #D7CCC8;
 }
 
-.signup-form a {
+.register-form a {
 	color: #D7CCC8;
 	text-decoration: none;
     border-bottom: 1px solid #bbb;
 }
 
-.signup-form a:hover {
+.register-form a:hover {
 	border-color: #D7CCC8;
 	color: 777;
 }
@@ -233,7 +233,7 @@ Responsive Design CSS Below
 */
 
 @media screen and (max-width: 300px) {
-	.description, .signup-form, .footer, .location-container  {
+	.description, .register-form, .footer, .location-container  {
 		padding: 3em 0;
 	}
 
