@@ -1,4 +1,4 @@
-'user strict';
+'use strict';
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
@@ -18,7 +18,7 @@ const UserSchema = mongoose.Schema({
   lastName: {type: String, default: ''}
 });
 
-UserSchema.methods.apiRepr = function () {
+UserSchema.methods.apiRepr = function() {
   return {
     username: this.username || '',
     firstName: this.firstName || '',
@@ -30,8 +30,8 @@ UserSchema.methods.validatePassword = (password) => {
   return bcrypt.compare(password, this.password);
 };
 
-UserSchema.statics.hashPassword = (password) => {
-  return bcrypt.hash(password, 12);
+UserSchema.statics.hashPassword = function(password) {
+  return bcrypt.hash(password, 10);
 };
 
 const User = mongoose.model('User', UserSchema);
