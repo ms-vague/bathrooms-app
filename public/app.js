@@ -17,7 +17,7 @@ let bathroomTemplate = (
 );
 
 let BATHROOMS_URL = '/bathrooms';
-let USERS_URL = 'https://api.mlab.com/api/1/databases/bathrooms-app/collections/users?apiKey=psLF_JUT39iDHgEuDEByu5aNBnusReG0';
+let USERS_URL = '/users';
 
 function getAndDisplayBathrooms() {
   $.getJSON(BATHROOMS_URL, function(bathrooms) {
