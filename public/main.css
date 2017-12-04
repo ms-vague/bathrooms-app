@@ -55,6 +55,7 @@ fieldset {
 input[type="firstName"],
 input[type="lastName"],
 input[type="email"],
+input[type="username"],
 input[type="password"],
 input[type="submit"] {
 	display: block;
@@ -89,6 +90,7 @@ button[type="submit"] {
 input[type="firstName"]: focus,
 input[type="lastName"]: focus,
 input[type="email"]: focus,
+input[type="username"]: focus,
 input[type="password"]: focus,
 input[type="submit"]: focus {
 	/* restore focus behavior like Firefox */

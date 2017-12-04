@@ -17,7 +17,7 @@ let bathroomTemplate = (
 );
 
 let BATHROOMS_URL = '/bathrooms';
-let USERS_URL = '/api/users';
+let USERS_URL = 'https://api.mlab.com/api/1/databases/bathrooms-app/collections/users?apiKey=psLF_JUT39iDHgEuDEByu5aNBnusReG0';
 
 function getAndDisplayBathrooms() {
   $.getJSON(BATHROOMS_URL, function(bathrooms) {
@@ -137,7 +137,7 @@ function addUser(user) {
     url: USERS_URL,
     data: JSON.stringify(user),
     success: function(data) {
-      console.log('Success!');
+      console.log(data, 'Success!');
     },
     dataType: 'json',
     contentType: 'application/json'
@@ -150,7 +150,7 @@ function addUsersToDatabase() {
     addUser({
       firstName: $(e.currentTarget).find(".user-first-name").val(),
       lastName: $(e.currentTarget).find(".user-last-name").val(),
-      username: $(e.currentTarget).find(".user-user-name").val(),
+      username: $(e.currentTarget).find(".username").val(),
       password: $(e.currentTarget).find(".user-password").val(),
     })
   });
