@@ -9,7 +9,7 @@ const router = express.Router();
 const jsonParser = bodyParser.json();
 
 // Post to register a new user
-router.post('/users', jsonParser, (req, res) => {
+router.post('/', jsonParser, (req, res) => {
   const requiredFields = ['username', 'password'];
   const missingField = requiredFields.find(field => !(field in req.body));
 
@@ -57,7 +57,7 @@ router.post('/users', jsonParser, (req, res) => {
       min: 5
     },
     password: {
-      min: 12,
+      min: 10,
       max: 72
     }
   };
@@ -110,24 +110,15 @@ router.post('/users', jsonParser, (req, res) => {
     .then(user => {
       return res.status(201).json(user.apiRepr());
     })
-    .catch(err => {
-      if (err.reason === 'Validation error') {
-        return res.status(err.code).json(err);
+    .catch(error => {
+      if (error.reason === 'Validation error') {
+        return res.status(error.code).json(error);
       }
       res.status(500).json({
         code: 500,
         message: 'Internal server error'
       });
     });
-});
-
-// delete this
-// do not expose all users in production application
-// can verify if users are being created in mongo shell
-router.get('/', (req, res) => {
-  return User.findById()
-    .then(users => res.json(users.map(user => user.apiRepr())))
-    .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 
 module.exports = {router};

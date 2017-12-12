@@ -52,6 +52,21 @@ app.get('/protected', jwtAuth, (req, res) => {
   });
 });
 
+app.get('/users', (req, res) => {
+  User
+  .find()
+  .exec()
+  .then(users => {
+    console.log(users);
+    res.json(users);
+  })
+  .catch(
+    err => {
+      console.error(err);
+      res.status(500).json({message: "Server error. Can't get users"})
+  });
+});
+
 app.get('/bathrooms', (req, res) => {
  Bathroom
  .find()
@@ -151,7 +166,7 @@ app.delete('/bathrooms/:id', (req, res) => {
 });
 
 app.use('*', (req, res) => {
-  res.status(404).json({message: 'Not Found'});
+  res.status(404).json({message: 'Error, not found.'});
 });
 
 let server;

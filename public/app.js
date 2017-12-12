@@ -130,28 +130,32 @@ function displayLocationInfo(bathroomTemplate) {
     .append(bathroomTemplate);
 }
 
-// validate users //
-function addUser(user) {
-  $.ajax({
-    method: 'POST',
+// add users to database //
+
+function registerUser(user) {
+    $.ajax({
+    method: "POST",
     url: USERS_URL,
     data: JSON.stringify(user),
     success: function(data) {
-      console.log(data, 'Success!');
+      console.log(data.username + " has been added to users database.")
     },
-    dataType: 'json',
-    contentType: 'application/json'
+    error: function() {
+      console.log("Didn't work.")
+    },
+    dataType: "json",
+    contentType: "application/json"
   });
 }
 
-function addUsersToDatabase() {
+function registerUserToDatabase() {
   $(".register-form").submit(function(e) {
-    e.preventDefault();
-    addUser({
-      firstName: $(e.currentTarget).find(".user-first-name").val(),
-      lastName: $(e.currentTarget).find(".user-last-name").val(),
-      username: $(e.currentTarget).find(".username").val(),
-      password: $(e.currentTarget).find(".user-password").val(),
+      e.preventDefault();
+      registerUser({
+        firstname: $(e.currentTarget).find(".user-first-name").val(),
+        lastname: $(e.currentTarget).find(".user-last-name").val(),
+        username: $(e.currentTarget).find(".username").val(),
+        password: $(e.currentTarget).find(".user-password").val()
     })
   });
 }
@@ -161,5 +165,5 @@ $(function() {
   handleBathroomAdd();
   handleBathroomDelete();
   displayLocationInfo();
-  addUsersToDatabase();
+  registerUserToDatabase();
 });
