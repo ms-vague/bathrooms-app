@@ -10,17 +10,23 @@
 	<link rel="stylesheet" href="main.css">
 </head>
 <body>
+	<main>
+		
+		<form role="form" action="/login.html" accept-charset="UTF-8" method="post" class="login-form">
+			<fieldset>
+				<legend>Safe Bathrooms App Log In</legend>
+				<label for="username">Username</label>
+				<input type="username" placeholder="Username" name="username" class="username" required/>
+				<label for="user-password">Password</label>
+				<input placeholder="************" type="password" name="user-password" class="user-password" required/>
+				<button type="submit">Log In</button>
+			</fieldset>
+		</form>
 
-	<form role="form" action="/login" accept-charset="UTF-8" method="post" class="register-form">
-		<fieldset>
-			<legend>Safe Bathrooms App Log In</legend>
-			<label for="username">Username</label>
-			<input type="username" placeholder="Username" name="username" id="username" required/>
-			<label for="user-password">Password</label>
-			<input placeholder="1289numericalPassword" type="password" name="user-password" id="user-password" required/>
-			<button type="submit">Log In</button>
-		</fieldset>
-	</form>
+	</main>
+
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js'></script>
+	<script src="app.js"></script>
 	
 </body>
 </html>

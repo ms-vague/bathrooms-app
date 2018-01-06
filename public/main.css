@@ -32,7 +32,7 @@ fieldset {
 	margin: 0 auto 30px;
 }
 
-.register-form {
+.register-form, .login-form {
 	width: 400px;
 	padding: 30px;
 	border-radius: 3px;
@@ -41,7 +41,7 @@ fieldset {
 	margin-bottom: 20px;
 }
 
-.register-form legend {
+.register-form legend, .login-form legend {
 	width: 100%;
 	line-height: 38px;
 	font-size: 35px;
@@ -107,20 +107,20 @@ button[type="submit"]:focus {
 	-o-transition: background 0.1s;
 }
 
-.register-form p {
+.register-form p, .login-form p {
 	font-size: 16px;
 	text-align: center;
 	margin: 10px 0 0;
 	color: #D7CCC8;
 }
 
-.register-form a {
+.register-form a, .login-form a {
 	color: #D7CCC8;
 	text-decoration: none;
     border-bottom: 1px solid #bbb;
 }
 
-.register-form a:hover {
+.register-form a:hover, .login-form a:hover {
 	border-color: #D7CCC8;
 	color: 777;
 }

@@ -137,8 +137,8 @@ function registerUser(user) {
     method: "POST",
     url: USERS_URL,
     data: JSON.stringify(user),
-    success: function(data) {
-      console.log(data.username + " has been added to users database.")
+    success: function(user) {
+      console.log(user.username + " has been added to users database.")
     },
     error: function() {
       console.log("Didn't work.")
@@ -152,13 +152,48 @@ function registerUserToDatabase() {
   $(".register-form").submit(function(e) {
       e.preventDefault();
       registerUser({
-        firstname: $(e.currentTarget).find(".user-first-name").val(),
-        lastname: $(e.currentTarget).find(".user-last-name").val(),
         username: $(e.currentTarget).find(".username").val(),
-        password: $(e.currentTarget).find(".user-password").val()
-    })
+        password: $(e.currentTarget).find(".user-password").val(),
+        firstname: $(e.currentTarget).find(".user-first-name").val(),
+        lastname: $(e.currentTarget).find(".user-last-name").val()
+    });
   });
 }
+
+// user login //
+
+function getBearerToken(user) {
+  //console.log(user);
+  $.ajax({
+    method: "POST",
+    url: "/auth/login",
+    contentType: "application/json",
+    beforeSend: function(xhr) {
+      if (localStorage.authToken) {
+        xhr.setRequestHeader("Authorization", "Bearer " + localStorage.authToken);
+      }
+    },
+    dataType: "json",
+    data: JSON.stringify(user),
+    success: function(userData) {
+      //console.log(userData.authToken);
+      localStorage.setItem("authToken", userData.authToken);
+      console.log(localStorage.getItem("authToken"));
+      //window.location.replace('results.html');
+    }
+  });
+}
+
+function userLogin() {
+  $(".login-form").submit(function(e) {
+    e.preventDefault();
+    getBearerToken({
+      username: $(e.currentTarget).find(".username").val(),
+      password: $(e.currentTarget).find(".user-password").val()
+    });
+  });
+}
+
 
 $(function() {
   getAndDisplayBathrooms();
@@ -166,4 +201,5 @@ $(function() {
   handleBathroomDelete();
   displayLocationInfo();
   registerUserToDatabase();
+  userLogin();
 });
