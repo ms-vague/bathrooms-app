@@ -173,11 +173,10 @@ function getBearerToken(user) {
     success: function(userData) {
       localStorage.setItem("authToken", userData.authToken);
       let token = localStorage.getItem("authToken");
-      window.location.replace('results.html');
+      window.location.replace("results.html");
     },
     error: function() {
-      console.log("401: Unauthorized.");
-      //window.location.href = window.location.href;
+      $(".unauth").text("Both username and password are incorrect. Please try again.");
     }
   }); 
   $.ajax({
