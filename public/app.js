@@ -163,25 +163,35 @@ function registerUserToDatabase() {
 // user login //
 
 function getBearerToken(user) {
-  //console.log(user);
+  //console.log(user); 
   $.ajax({
     method: "POST",
     url: "/auth/login",
     contentType: "application/json",
+    dataType: "json",
+    data: JSON.stringify(user),
+    success: function(userData) {
+      localStorage.setItem("authToken", userData.authToken);
+      let token = localStorage.getItem("authToken");
+      window.location.replace('results.html');
+    },
+    error: function() {
+      console.log("401: Unauthorized.");
+      //window.location.href = window.location.href;
+    }
+  }); 
+  $.ajax({
+    method: "GET",
+    url: "/protected",
+    contentType: "application/json",
+    dataType: "json",
+    data: JSON.stringify(user),
     beforeSend: function(xhr) {
       if (localStorage.authToken) {
         xhr.setRequestHeader("Authorization", "Bearer " + localStorage.authToken);
       }
-    },
-    dataType: "json",
-    data: JSON.stringify(user),
-    success: function(userData) {
-      //console.log(userData.authToken);
-      localStorage.setItem("authToken", userData.authToken);
-      console.log(localStorage.getItem("authToken"));
-      //window.location.replace('results.html');
     }
-  });
+  }); 
 }
 
 function userLogin() {
