@@ -176,12 +176,13 @@ function getBearerToken(user) {
       window.location.replace("results.html");
     },
     error: function() {
+      window.location.replace("login.html");
       $(".unauth").text("Both username and password are incorrect. Please try again.");
     }
   }); 
   $.ajax({
     method: "GET",
-    url: "/protected",
+    url: "/login",
     contentType: "application/json",
     dataType: "json",
     data: JSON.stringify(user),
@@ -189,8 +190,11 @@ function getBearerToken(user) {
       if (localStorage.authToken) {
         xhr.setRequestHeader("Authorization", "Bearer " + localStorage.authToken);
       }
+    },
+    success: function(data) {
+      console.log(data);
     }
-  }); 
+  });  
 }
 
 function userLogin() {
