@@ -47,11 +47,13 @@ app.use('/auth', authRouter);
 const jwtAuth = passport.authenticate('jwt', {session: false});
 
 // can I redirect user to results.html with successful login? //
-app.get('/protected', jwtAuth, (req, res) => {
+app.get('/login', jwtAuth, (req, res) => {
   return res.json({
-    data: 'there you are'
-  });
+    data: "This is very difficult to crack."
+  })
 });
+
+
 
 app.get('/users', jwtAuth, (req, res) => {
   User
@@ -68,7 +70,7 @@ app.get('/users', jwtAuth, (req, res) => {
   });
 });
 
-app.get('/bathrooms', (req, res) => {
+app.get('/bathrooms', jwtAuth, (req, res) => {
  Bathroom
  .find()
  .exec()
