@@ -85,14 +85,15 @@ app.get('/bathrooms', jwtAuth, (req, res) => {
 });
 
 app.get('/bathrooms/:id', (req, res) => {
- Bathroom
- .findById(req.params.id)
- .exec()
- .then(bathroom => res.json(bathroom))
- .catch(err => {
+  console.log(req);
+  Bathroom
+  .findById(req.params.id)
+  .exec()
+  .then(bathroom => res.json(bathroom))
+  .catch(err => {
   console.error(err);
-   res.status(500).json({message: 'Internal server error'})
- });
+    res.status(500).json({message: 'Internal server error'})
+  });
 });
 
 app.post('/bathrooms', (req, res) => {

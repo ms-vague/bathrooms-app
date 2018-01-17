@@ -162,8 +162,7 @@ function registerUserToDatabase() {
 
 // user login //
 
-function getBearerToken(user) {
-  //console.log(user); 
+function getBearerToken(user) { 
   $.ajax({
     method: "POST",
     url: "/auth/login",
@@ -175,11 +174,16 @@ function getBearerToken(user) {
       let token = localStorage.getItem("authToken");
       window.location.replace("results.html");
     },
-    error: function() {
-      window.location.replace("login.html");
-      $(".unauth").text("Both username and password are incorrect. Please try again.");
+    error: function(data) {
+      $(".unauth").css({"background-color": "#FF0000",
+        "width": "400px",
+        "height": "30px",
+        "height": "50px",
+        "padding": "6px",
+        "border-radius": "2px"})
+      .text(data.statusText + ":" + " Password or Username is incorrect");
     }
-  }); 
+  });  
   $.ajax({
     method: "GET",
     url: "/login",
@@ -190,11 +194,8 @@ function getBearerToken(user) {
       if (localStorage.authToken) {
         xhr.setRequestHeader("Authorization", "Bearer " + localStorage.authToken);
       }
-    },
-    success: function(data) {
-      console.log(data);
     }
-  });  
+  });
 }
 
 function userLogin() {
@@ -206,7 +207,6 @@ function userLogin() {
     });
   });
 }
-
 
 $(function() {
   getAndDisplayBathrooms();

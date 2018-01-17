@@ -125,6 +125,11 @@ button[type="submit"]:focus {
 	color: 777;
 }
 
+.unauth {
+	display: inline-block;
+	text-align: center;
+}
+
 footer {
 	text-align: center;
 	color: white;
