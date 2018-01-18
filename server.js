@@ -48,12 +48,8 @@ const jwtAuth = passport.authenticate('jwt', {session: false});
 
 // can I redirect user to results.html with successful login? //
 app.get('/login', jwtAuth, (req, res) => {
-  return res.json({
-    data: "This is very difficult to crack."
-  })
+  return res.json("Pretty difficult stuff.");
 });
-
-
 
 app.get('/users', jwtAuth, (req, res) => {
   User
