@@ -115,10 +115,10 @@ function addMarkers(coords, names, type) {
     icon: icon
   });
 
-  marker.addListener('mouseover', function() {
+  marker.addListener('mouseover', handler, {capture: true}, function() {
     infoWindow.open(map, marker)
   });
-  marker.addListener('mouseout', function() {
+  marker.addListener('mouseout', handler, {capture: true}, function() {
     infoWindow.close();
   });
 }
@@ -172,7 +172,6 @@ function getBearerToken(user) {
     success: function(userData) {
       localStorage.setItem("authToken", userData.authToken);
       let token = localStorage.getItem("authToken");
-      //window.location.replace("results.html");
     },
     error: function(data) {
       $(".unauth").css({"background-color": "#FF0000",
@@ -183,7 +182,7 @@ function getBearerToken(user) {
         "border-radius": "2px"})
       .text(data.statusText + ": Password or Username is incorrect");
     },
-      complete: function(data) {
+    complete: function(data) {
       $.ajax({
         method: "POST",
         url: "/auth/login",
@@ -191,25 +190,27 @@ function getBearerToken(user) {
         dataType: "json",
         data: JSON.stringify(user),
         success: function() {
-          console.log("Ok");
-                $.ajax({
-                  method: "GET",
-                  url: "/bathrooms",
-                  contentType: "application/json",
-                  dataType: "json",
-                  data: JSON.stringify(user),
-                  beforeSend: function(xhr) {
-                    let authToken = data.responseJSON.authToken;
-                    if (localStorage.authToken) {
-                      xhr.setRequestHeader("Authorization", "Bearer " + localStorage.authToken);
-                    }
-                  },
-                  success: function(data) {
-                    console.log(data);
-                  }
-                });
+          $.ajax({
+            method: "GET",
+            url: "/bathrooms",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(user),
+            beforeSend: function(xhr) {
+              let authToken = data.responseJSON.authToken;
+              if (localStorage.authToken) {
+                xhr.setRequestHeader("Authorization", "Bearer " + localStorage.authToken);
+              }             
+            },
+            success: function() {
+              console.log("Hey, it worked.")
+            },
+            error: function() {
+              console.log("Try again.");
+            }
+          });
         }
-      }); 
+      });      
     }
   }); 
   $.ajax({
@@ -222,6 +223,9 @@ function getBearerToken(user) {
       if (localStorage.authToken) {
         xhr.setRequestHeader("Authorization", "Bearer " + localStorage.authToken);
       }
+    },
+    success: function(data) {
+      console.log(data);
     }
   });
 }
