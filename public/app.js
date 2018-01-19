@@ -137,14 +137,14 @@ function registerUser(user) {
     method: "POST",
     url: USERS_URL,
     data: JSON.stringify(user),
+    dataType: "json",
+    contentType: "application/json",
     success: function(user) {
       console.log(user.username + " has been added to users database.")
     },
     error: function() {
       console.log("Didn't work.")
-    },
-    dataType: "json",
-    contentType: "application/json"
+    }
   });
 }
 
@@ -171,7 +171,7 @@ function getBearerToken(user) {
     data: JSON.stringify(user),
     success: function(userData) {
       localStorage.setItem("authToken", userData.authToken);
-      let token = localStorage.getItem("authToken");
+      localStorage.getItem("authToken");
     },
     error: function(data) {
       $(".unauth").css({"background-color": "#FF0000",
@@ -225,7 +225,7 @@ function getBearerToken(user) {
       }
     },
     success: function(data) {
-      console.log(data);
+      console.log("Hello", data);
     }
   });
 }
