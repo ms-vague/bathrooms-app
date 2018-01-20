@@ -220,18 +220,22 @@ html, body {
 }
 
 .input-return {
-	text-align: center;
-	margin-top: 6px;
-	margin-bottom: 6px;
+	text-align: left;
+	margin: 6px 6px 6px;
 }
 
-.input-return a {
+.button-logout {
+	text-align: right;
+	margin: 6px 0px 6px 6px;	
+}
+
+.input-return a, .button-logout a {
 	text-decoration: none;
 	font-weight: bold;
 	color: #000000;
 }
 
-.button-add-more {
+.button-add-more, .logout {
 	background-color: #AEB1BB;
 }
 

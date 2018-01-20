@@ -162,7 +162,7 @@ function registerUserToDatabase() {
 
 // user login //
 
-function getBearerToken(user) { 
+function getBearerTokenAndLogIn(user) { 
   $.ajax({
     method: "POST",
     url: "/auth/login",
@@ -181,36 +181,6 @@ function getBearerToken(user) {
         "padding": "6px",
         "border-radius": "2px"})
       .text(data.statusText + ": Password or Username is incorrect");
-    },
-    complete: function(data) {
-      $.ajax({
-        method: "POST",
-        url: "/auth/login",
-        contentType: "application/json",
-        dataType: "json",
-        data: JSON.stringify(user),
-        success: function() {
-          $.ajax({
-            method: "GET",
-            url: "/bathrooms",
-            contentType: "application/json",
-            dataType: "json",
-            data: JSON.stringify(user),
-            beforeSend: function(xhr) {
-              let authToken = data.responseJSON.authToken;
-              if (localStorage.authToken) {
-                xhr.setRequestHeader("Authorization", "Bearer " + localStorage.authToken);
-              }             
-            },
-            success: function() {
-              console.log("Hey, it worked.")
-            },
-            error: function() {
-              console.log("Try again.");
-            }
-          });
-        }
-      });      
     }
   }); 
   $.ajax({
@@ -227,16 +197,36 @@ function getBearerToken(user) {
     success: function(data) {
       console.log("Hello", data);
     }
-  });
+  })
+  $.ajax({
+    method: "GET",
+    url: "/bathrooms",
+    beforeSend: function(xhr) {
+      xhr.setRequestHeader("Authorization", "Bearer " + localStorage.authToken);
+    },
+    success: function(data) {
+      console.log(data);
+    }
+  })
 }
 
 function userLogin() {
   $(".login-form").submit(function(e) {
     e.preventDefault();
-    getBearerToken({
+    getBearerTokenAndLogIn({
       username: $(e.currentTarget).find(".username").val(),
       password: $(e.currentTarget).find(".user-password").val()
     });
+  });
+}
+
+function userLogout() {
+  $(".logout").on("click", function(e) {
+    e.preventDefault();
+    localStorage.clear();
+    if (localStorage.getItem("authToken")  === null) {
+      window.location.href = "login.html";
+    }
   });
 }
 
@@ -247,4 +237,5 @@ $(function() {
   displayLocationInfo();
   registerUserToDatabase();
   userLogin();
+  userLogout();
 });

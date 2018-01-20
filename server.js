@@ -81,7 +81,6 @@ app.get('/bathrooms', jwtAuth, (req, res) => {
 });
 
 app.get('/bathrooms/:id', (req, res) => {
-  console.log(req);
   Bathroom
   .findById(req.params.id)
   .exec()
