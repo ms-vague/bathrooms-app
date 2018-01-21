@@ -19,8 +19,15 @@ let bathroomTemplate = (
 let BATHROOMS_URL = '/bathrooms';
 let USERS_URL = '/users';
 
-function getAndDisplayBathrooms() {
-  $.getJSON(BATHROOMS_URL, function(bathrooms) {
+function getAndDisplayBathrooms(bathrooms) {
+  $.ajax({
+    method: "GET",
+    url: "/bathrooms",
+    beforeSend: function(xhr) {
+      xhr.setRequestHeader("Authorization", "Bearer " + localStorage.authToken);
+    },
+    success: function(bathrooms, data) {
+      //console.log(data);
     let bathroomElements = bathrooms.map(function(bathroom) {
       let element = $(bathroomTemplate);
       element.attr('id', bathroom._id);
@@ -35,7 +42,8 @@ function getAndDisplayBathrooms() {
       return element;
     });
     $('.location-info').html(bathroomElements);
-  });
+    }
+  })
 }
 
 function addBathroomLocation(bathroom) {
@@ -87,7 +95,29 @@ let map;
 const icon = 'http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_purple.png';
 
 function initMap() {
-  $.getJSON(BATHROOMS_URL, function(bathrooms) {
+  $.ajax({
+    method: "GET",
+    url: BATHROOMS_URL,
+    beforeSend: function(xhr) {
+      xhr.setRequestHeader("Authorization", "Bearer " + localStorage.authToken);
+    },
+    success: function(bathrooms) {
+      bathrooms.forEach(function(element) {
+        const coords = element.coordinates;
+        const names = element.name;
+        const type = element.type;
+        const city = element.city;
+        const street = element.address.street;
+        addMarkers(coords, names, type);
+      });
+    const newOrleans = { lng: -90.0715, lat: 29.9511 };
+      map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 10,
+        center: newOrleans      
+      });
+    }
+  });
+  /*$.getJSON(BATHROOMS_URL, function(bathrooms) {
     bathrooms.forEach(function(element) {
       const coords = element.coordinates;
       const names = element.name;
@@ -101,7 +131,7 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
       zoom: 10,
       center: newOrleans
-  });
+  }); */
 }
 
 function addMarkers(coords, names, type) {
@@ -115,10 +145,10 @@ function addMarkers(coords, names, type) {
     icon: icon
   });
 
-  marker.addListener('mouseover', handler, {capture: true}, function() {
+  marker.addListener('mouseover', function() {
     infoWindow.open(map, marker)
   });
-  marker.addListener('mouseout', handler, {capture: true}, function() {
+  marker.addListener('mouseout', function() {
     infoWindow.close();
   });
 }
@@ -196,18 +226,9 @@ function getBearerTokenAndLogIn(user) {
     },
     success: function(data) {
       console.log("Hello", data);
+      window.location.replace("results.html");
     }
-  })
-  $.ajax({
-    method: "GET",
-    url: "/bathrooms",
-    beforeSend: function(xhr) {
-      xhr.setRequestHeader("Authorization", "Bearer " + localStorage.authToken);
-    },
-    success: function(data) {
-      console.log(data);
-    }
-  })
+  });
 }
 
 function userLogin() {
