@@ -67,11 +67,10 @@ app.get('/users', jwtAuth, (req, res) => {
 });
 
 app.get('/bathrooms', jwtAuth, (req, res) => {
-  if (res.statusCode === 200) {
-    Bathroom
-     .find()
-     .exec()
-     .then(bathrooms => {
+  Bathroom
+    .find()
+    .exec()
+    .then(bathrooms => {
       res.json(bathrooms);
     })
     .catch(
@@ -79,7 +78,6 @@ app.get('/bathrooms', jwtAuth, (req, res) => {
        console.error(err);
        res.status(500).json({message: 'Internal server error'});
     });
-  }
 });
 
 app.get('/bathrooms/:id', (req, res) => {
