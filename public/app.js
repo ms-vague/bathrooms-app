@@ -16,13 +16,13 @@ let bathroomTemplate = (
     "</div>"
 );
 
-let BATHROOMS_URL = '/bathrooms';
-let USERS_URL = '/users';
+let BATHROOMS_ROUTE = '/bathrooms';
+let USERS_ROUTE = '/users';
 
 function getAndDisplayBathrooms(bathrooms) {
   $.ajax({
     method: "GET",
-    url: "/bathrooms",
+    url: BATHROOMS_ROUTE,
     beforeSend: function(xhr) {
       xhr.setRequestHeader("Authorization", "Bearer " + localStorage.authToken);
     },
@@ -42,6 +42,9 @@ function getAndDisplayBathrooms(bathrooms) {
       return element;
     });
     $('.location-info').html(bathroomElements);
+    },
+    error: function() {
+      console.log("Nope.");
     }
   })
 }
@@ -49,7 +52,7 @@ function getAndDisplayBathrooms(bathrooms) {
 function addBathroomLocation(bathroom) {
   $.ajax({
     method: 'POST',
-    url: BATHROOMS_URL,
+    url: BATHROOMS_ROUTE,
     data: JSON.stringify(bathroom),
     success: function(data) {
       getAndDisplayBathrooms();
@@ -61,7 +64,7 @@ function addBathroomLocation(bathroom) {
 
 function deleteBathroomLocation(bathroomId) {
   $.ajax({
-    url: BATHROOMS_URL + '/' + bathroomId,
+    url: BATHROOMS_ROUTE + '/' + bathroomId,
     method: 'DELETE',
     success: getAndDisplayBathrooms
   });
@@ -97,7 +100,7 @@ const icon = 'http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_purple.pn
 function initMap() {
   $.ajax({
     method: "GET",
-    url: BATHROOMS_URL,
+    url: BATHROOMS_ROUTE,
     beforeSend: function(xhr) {
       xhr.setRequestHeader("Authorization", "Bearer " + localStorage.authToken);
     },
@@ -110,28 +113,13 @@ function initMap() {
         const street = element.address.street;
         addMarkers(coords, names, type);
       });
-    const newOrleans = { lng: -90.0715, lat: 29.9511 };
+      const newOrleans = { lng: -90.0715, lat: 29.9511 };
       map = new google.maps.Map(document.getElementById('map'), {
         zoom: 10,
         center: newOrleans      
       });
     }
   });
-  /*$.getJSON(BATHROOMS_URL, function(bathrooms) {
-    bathrooms.forEach(function(element) {
-      const coords = element.coordinates;
-      const names = element.name;
-      const type = element.type;
-      const city = element.city;
-      const street = element.address.street;
-      addMarkers(coords, names, type);
-    });
-  }); 
-    const newOrleans = { lng: -90.0715, lat: 29.9511 };
-    map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 10,
-      center: newOrleans
-  }); */
 }
 
 function addMarkers(coords, names, type) {
@@ -225,8 +213,7 @@ function getBearerTokenAndLogIn(user) {
       }
     },
     success: function(data) {
-      console.log("Hello", data);
-      window.location.replace("results.html");
+      console.log("Hello. ", data);
     }
   });
 }
