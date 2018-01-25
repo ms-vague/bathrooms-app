@@ -4,7 +4,8 @@
   "description": "Unit 2 Capstone",
   "main": "server.js",
   "scripts": {
-    "test": "PORT=8081  mocha /"
+    "test": "PORT=8081  mocha /",
+    "start": "nodemon server.js"
   },
   "author": "",
   "license": "MIT",
