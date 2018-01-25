@@ -238,6 +238,12 @@ function userLogout() {
   });
 }
 
+function checkIfLoggedIn() {
+  if(localStorage.length === 0) {
+    $(".main").hide()
+  }
+}
+
 $(function() {
   getAndDisplayBathrooms();
   handleBathroomAdd();
@@ -246,4 +252,5 @@ $(function() {
   registerUserToDatabase();
   userLogin();
   userLogout();
+  checkIfLoggedIn();
 });

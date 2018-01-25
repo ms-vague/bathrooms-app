@@ -19,6 +19,10 @@ Chrome 26+, Opera 12+, Safari 7+ */
 	font-family: Roboto, Sans-Serif; 
 }
 
+#not-authorized {
+	text-align: center;
+}
+
 fieldset {
 	padding: 0;
 	border: 0;
