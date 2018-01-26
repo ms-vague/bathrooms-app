@@ -214,6 +214,11 @@ function getBearerTokenAndLogIn(user) {
     },
     success: function(data) {
       console.log("Hello. ", data);
+      if (localStorage === 0) {
+        window.location.reload(true);
+      } else {
+        window.location.href = "results.html";
+      }
     }
   });
 }
@@ -240,7 +245,11 @@ function userLogout() {
 
 function checkIfLoggedIn() {
   if(localStorage.length === 0) {
-    $(".main").hide()
+    $(".main")
+      .addClass("not-authorized")
+    $(".not-authorized")
+      .empty()
+      .prepend("Not authorized to view this page.")
   }
 }
 

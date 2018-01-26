@@ -19,8 +19,13 @@ Chrome 26+, Opera 12+, Safari 7+ */
 	font-family: Roboto, Sans-Serif; 
 }
 
-#not-authorized {
-	text-align: center;
+.not-authorized {
+	display: block;
+	margin: 40px auto 0;
+  width: 600px;
+  height: 250px;
+  background-color: #FFFFFF;        
+  border-radius: 3px;	
 }
 
 fieldset {
