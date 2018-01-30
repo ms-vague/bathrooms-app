@@ -296,13 +296,12 @@ html, body {
 }
 
 .add-bathroom-btn {
-  margin: auto;
+  text-align: center;d
   width: 300px;
-  padding: 14px 20px;
+  padding: 10px 10px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  padding: 20px;
 }
 
 .add-bathroom-btn:hover {
