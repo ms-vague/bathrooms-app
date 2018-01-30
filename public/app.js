@@ -251,7 +251,7 @@ function checkIfLoggedIn() {
                       "<span class='auth-login'>Login</span>" +
                     "</a>" +
                   "</button>"
-                );
+  );
   if(localStorage.length === 0) {
     $(".modal")
       .addClass("not-authorized")
