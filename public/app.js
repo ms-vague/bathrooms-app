@@ -123,6 +123,7 @@ function initMap() {
 }
 
 function addMarkers(coords, names, type) {
+  console.log(coords, names, type);
   const infoWindow = new google.maps.InfoWindow({
   content: `${names}'s bathroom is ${type}.`
   });
@@ -214,11 +215,11 @@ function getBearerTokenAndLogIn(user) {
     },
     success: function(data) {
       console.log("Hello. ", data);
-      if (localStorage === 0) {
+      /*if (localStorage === 0) {
         window.location.reload(true);
       } else {
         window.location.href = "results.html";
-      }
+      } */
     }
   });
 }
@@ -244,12 +245,20 @@ function userLogout() {
 }
 
 function checkIfLoggedIn() {
+  const notAuthorized = $("<h1>Not Authorized</h1>");
+  const login = $("<button class='auth-login'>" +
+                    "<a href='/login.html'>" +
+                      "<span class='auth-login'>Login</span>" +
+                    "</a>" +
+                  "</button>"
+                );
   if(localStorage.length === 0) {
-    $(".main")
+    $(".modal")
       .addClass("not-authorized")
     $(".not-authorized")
       .empty()
-      .prepend("Not authorized to view this page.")
+      .prepend(notAuthorized)
+      .append(login);
   }
 }
 
