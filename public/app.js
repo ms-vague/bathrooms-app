@@ -215,11 +215,11 @@ function getBearerTokenAndLogIn(user) {
     },
     success: function(data) {
       console.log("Hello. ", data);
-      /*if (localStorage === 0) {
+      if (localStorage === 0) {
         window.location.reload(true);
       } else {
         window.location.href = "results.html";
-      } */
+      }
     }
   });
 }
