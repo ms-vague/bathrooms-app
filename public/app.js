@@ -27,7 +27,6 @@ function getAndDisplayBathrooms(bathrooms) {
       xhr.setRequestHeader("Authorization", "Bearer " + localStorage.authToken);
     },
     success: function(bathrooms, data) {
-      //console.log(data);
     let bathroomElements = bathrooms.map(function(bathroom) {
       let element = $(bathroomTemplate);
       element.attr('id', bathroom._id);
