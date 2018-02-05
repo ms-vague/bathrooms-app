@@ -190,7 +190,24 @@ function getBearerTokenAndLogIn(user) {
     data: JSON.stringify(user),
     success: function(userData) {
       localStorage.setItem("authToken", userData.authToken);
-      localStorage.getItem("authToken");
+      const token = localStorage.getItem("authToken");
+        $.ajax({
+          method: "GET",
+          url: "/login",
+          contentType: "application/json",
+          dataType: "json",
+          data: JSON.stringify(user),
+          beforeSend: function(xhr, token) {
+            if (localStorage.authToken) {
+              xhr.setRequestHeader("Authorization", "Bearer " + localStorage.authToken);
+            }
+          },
+          success: function(data) {
+            if (localStorage !== 0) {
+              window.location.href = "results.html";
+            }
+          }
+      });
     },
     error: function(data) {
       $(".unauth").css({"background-color": "#FF0000",
@@ -202,26 +219,6 @@ function getBearerTokenAndLogIn(user) {
       .text(data.statusText + ": Password or Username is incorrect");
     }
   }); 
-  $.ajax({
-    method: "GET",
-    url: "/login",
-    contentType: "application/json",
-    dataType: "json",
-    data: JSON.stringify(user),
-    beforeSend: function(xhr) {
-      if (localStorage.authToken) {
-        xhr.setRequestHeader("Authorization", "Bearer " + localStorage.authToken);
-      }
-    },
-    success: function(data) {
-      console.log("Hello. ", data);
-      if (localStorage === 0) {
-        window.location.reload(true);
-      } else {
-        window.location.href = "results.html";
-      }
-    }
-  });
 }
 
 function userLogin() {
