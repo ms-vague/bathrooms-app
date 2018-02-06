@@ -73,14 +73,14 @@ function handleBathroomAdd() {
   $('.add-bathroom-form').submit(function(e) {
     e.preventDefault();
     addBathroomLocation({
-      type: $(e.currentTarget).find('.type').val(),
+      type: $(e.currentTarget).find('.gender-type').val(),
       city: $(e.currentTarget).find('.city').val(),
       name: $(e.currentTarget).find('.name').val(),
       street: $(e.currentTarget).find('.street').val(),
       state: $(e.currentTarget).find('.state').val(),
       zipcode: $(e.currentTarget).find('.zipcode').val()
     })
-    window.location.replace('results.html');
+    //window.location.replace('results.html');
   });
 }
 
