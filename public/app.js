@@ -80,7 +80,9 @@ function handleBathroomAdd() {
       state: $(e.currentTarget).find('.state').val(),
       zipcode: $(e.currentTarget).find('.zipcode').val()
     })
-    //window.location.replace('results.html');
+    setTimeout(function() {
+      window.location.href = "results.html";
+    }, 500);
   });
 }
 
@@ -94,7 +96,6 @@ function handleBathroomDelete() {
 // google maps implementation //
 
 let map;
-const icon = 'http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_purple.png';
 
 function initMap() {
   $.ajax({
@@ -110,21 +111,25 @@ function initMap() {
         const type = element.type;
         const city = element.city;
         const street = element.address.street;
+
         addMarkers(coords, names, type);
-      });
+
       const newOrleans = { lng: -90.0715, lat: 29.9511 };
       map = new google.maps.Map(document.getElementById('map'), {
         zoom: 10,
         center: newOrleans      
+      });
+
       });
     }
   });
 }
 
 function addMarkers(coords, names, type) {
-  console.log(coords, names, type);
+  const icon = 'http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_purple.png';
+
   const infoWindow = new google.maps.InfoWindow({
-  content: `${names}'s bathroom is ${type}.`
+    content: `${names}'s bathroom is ${type}.`
   });
 
   const marker = new google.maps.Marker({
