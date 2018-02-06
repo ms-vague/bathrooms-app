@@ -46,14 +46,9 @@ app.use('/auth', authRouter);
 
 const jwtAuth = passport.authenticate('jwt', {session: false});
 
-// can I redirect user to results.html with successful login? //
 app.get('/login', jwtAuth, (req, res) => {
-  return res.json({
-    data: "This is very difficult to crack."
-  })
+  return res.json("Bathrooms are ready to be accessed.");
 });
-
-
 
 app.get('/users', jwtAuth, (req, res) => {
   User
@@ -71,28 +66,28 @@ app.get('/users', jwtAuth, (req, res) => {
 });
 
 app.get('/bathrooms', jwtAuth, (req, res) => {
- Bathroom
- .find()
- .exec()
- .then(bathrooms => {
-  res.json(bathrooms);
- })
- .catch(
-  err => {
-   console.error(err);
-   res.status(500).json({message: 'Internal server error'});
-  });
+  Bathroom
+    .find()
+    .exec()
+    .then(bathrooms => {
+      res.json(bathrooms);
+    })
+    .catch(
+      err => {
+       console.error(err);
+       res.status(500).json({message: 'Internal server error'});
+    });
 });
 
 app.get('/bathrooms/:id', (req, res) => {
- Bathroom
- .findById(req.params.id)
- .exec()
- .then(bathroom => res.json(bathroom))
- .catch(err => {
+  Bathroom
+  .findById(req.params.id)
+  .exec()
+  .then(bathroom => res.json(bathroom))
+  .catch(err => {
   console.error(err);
-   res.status(500).json({message: 'Internal server error'})
- });
+    res.status(500).json({message: 'Internal server error'})
+  });
 });
 
 app.post('/bathrooms', (req, res) => {
