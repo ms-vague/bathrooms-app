@@ -1,4 +1,4 @@
-# What is the Safe Bathrooms?
+# What is Safe Bathrooms?
 
 Safe Bathrooms is a multipage user generated platform that provides information about gender secific public restrooms.
 Users can register new locations, inputing gender specific information about each restroom.
