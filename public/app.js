@@ -158,7 +158,7 @@ function displayLocationInfo(bathroomTemplate) {
 function registerUser(user) {
     $.ajax({
     method: "POST",
-    url: USERS_URL,
+    url: USERS_ROUTE,
     data: JSON.stringify(user),
     dataType: "json",
     contentType: "application/json",
