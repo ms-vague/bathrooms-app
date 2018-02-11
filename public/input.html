@@ -1,33 +1,39 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Safe Bathrooms App</title>
+  <title>Safe Bathrooms App</title>
   <meta name="description" content="Where to find safe gender neutral bathrooms in New Orleans.">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
   <link rel="stylesheet" href="main.css">
 </head>
 <body>
 
-  <section class='input'>
+  <main class="modal">
 
-    <h1>Add New Bathroom Location</h1>
+    <section class='input'>
 
-    <form class='add-bathroom-form'>
-      <select class='type'>
-        <option value='neutral'>Neutral</option>
-        <option value='gendered'>Gendered</option>
-      </select>
-      <input type="text" name="bathroom-entry" class="city" placeholder="City">
-      <input type="text" name="bathroom-entry" class="name" placeholder="Name">
-      <input type="text" name="bathroom-entry" class="street" placeholder="Street">
-      <input type="text" name="bathroom-entry" class="state" placeholder="State">
-      <input type="text" name="bathroom-entry" class="zipcode" placeholder="Zipcode">
-      <button type='submit' class='add-bathroom'>Add new location</button>
-    </form>
+      <h1>Add New Bathroom Location</h1>
 
-  </section>
+      <form class='add-bathroom-form'>
+        <select class='gender-type'>
+          <option value='neutral'>Gender Neutral</option>
+          <option value='gendered'>Gendered</option>
+        </select>
+        <input type="text" name="bathroom-entry" class="city" placeholder="City" required/>
+        <input type="text" name="bathroom-entry" class="name" placeholder="Name" required/>
+        <input type="text" name="bathroom-entry" class="street" placeholder="Street" required/>
+        <input type="text" name="bathroom-entry" class="state" placeholder="State" required/>
+        <input type="text" name="bathroom-entry" class="zipcode" placeholder="Zipcode" required/>
+        <button type='submit' class='add-bathroom-btn'>Add new location</button>
+      </form>
+
+    </section>
+
+  </main>
 
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js'></script>
   <script src="app.js"></script>

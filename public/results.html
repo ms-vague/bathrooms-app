@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Safe Bathrooms App</title>
+  <title>Safe Bathrooms App</title>
     <meta name="description" content="Where to find safe gender neutral bathrooms in New Orleans.">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
-  <main>
+  <main class="modal">
 
     <nav class="input-return">
       <button class="button-add-more"> 
@@ -17,6 +18,14 @@
           <span class="add-more-locations">Add More Locations</span>
         </a>
       </button>
+    </nav>
+
+    <nav class="button-logout">
+      <button class="logout">
+        <a href="/login.html">
+          <span class="click-logout">Logout</span>
+        </a>        
+      </button>           
     </nav>
 
     <section class="map">

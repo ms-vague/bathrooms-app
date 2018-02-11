@@ -6,3 +6,6 @@ Users can register new locations, inputing gender specific information about eac
 This site uses the Google Maps API. 
 
 This app was designed to provide gender non-conforming people options for public restrooms. However, it can be useful for any person seeking a safe bathroom.
+
+![alt text](/images/README1.png)
+![alt text](/images/README2.png)
